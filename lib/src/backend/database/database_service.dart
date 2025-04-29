@@ -1,5 +1,5 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:postgres/postgres.dart';
+import 'package:sazones_semanales/src/backend/config/config.dart';
 
 class DatabaseService {
   static late final Connection _connection;
@@ -8,11 +8,11 @@ class DatabaseService {
   static Future<void> init() async {
     _connection = await Connection.open(
       Endpoint(
-        host: dotenv.env['POSTGRES_HOST']!,
-        database: dotenv.env['POSTGRES_DB']!,
-        username: dotenv.env['POSTGRES_USER']!,
-        password: dotenv.env['POSTGRES_PASSWORD']!,
-        port: int.parse(dotenv.env['POSTGRES_PORT']!),
+        host: AppConfig.databaseHostUrl,
+        database: AppConfig.databaseName,
+        username: AppConfig.databaseAuthUser,
+        password: AppConfig.databaseAuthPassword,
+        port: AppConfig.databasePort,
       ),
       settings: const ConnectionSettings(sslMode: SslMode.disable),
     );

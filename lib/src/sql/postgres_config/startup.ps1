@@ -1,17 +1,16 @@
 param(
-    [string]$env = "dev"
+    [string]$env = "development"
 )
 
-# Pararse en la carpeta del script
 Set-Location -Path $PSScriptRoot
 
-# Definir la ruta del archivo .env correcto
+# Default to dev file
 $envFile = ".env.development"
-$composeFile = "podman-compose-dev.yml"  # Default to dev file
+$composeFile = "podman-compose-dev.yml"
 
-if ($env -eq "prod") {
+if ($env -eq "production") {
     $envFile = ".env.production"
-    $composeFile = "podman-compose-prod.yml"  # Switch to prod file
+    $composeFile = "podman-compose-prod.yml"
 }
 
 # Verificar que el archivo .env existe

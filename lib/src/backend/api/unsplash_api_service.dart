@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class UnsplashApiService {
   static const String _baseUrl = 'https://api.unsplash.com';
-  static const String _accessKey =
-      'TU_CLAVE_DE_UNSPLASH'; // ⚠️ cámbiala por tu propia key
+  static String get _accessKey => dotenv.env['UNSPLASH_KEY']!;
 
-  /// Busca fotos en Unsplash
   static Future<List<String>> searchPhotos(String query, {int page = 1}) async {
     final uri = Uri.parse('$_baseUrl/search/photos?page=$page&query=$query');
 
