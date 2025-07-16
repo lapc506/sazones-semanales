@@ -258,3 +258,22 @@ Esta aplicación está diseñada para gestionar eficientemente el inventario de 
 5. CUANDO el sistema genere sugerencias de compra ENTONCES el sistema DEBERÁ incluir productos básicos de emergencia (bombillas, fusibles, clavos, tornillos)
 6. CUANDO el usuario registre un proyecto de reparación ENTONCES el sistema DEBERÁ permitir asociar materiales específicos y hacer seguimiento de consumo por proyecto
 7. CUANDO el usuario configure alertas ENTONCES el sistema DEBERÁ permitir notificaciones para mantener stock mínimo de productos esenciales de emergencia
+
+### Requisito 19
+
+**Historia de Usuario:** Como usuario que planifica comidas semanales y busca optimizar mi meal prep, quiero activar un "Modo Chef Personal" que me genere recetas basadas en mis existencias actuales y me conecte con chefs privados para servicios especializados, para maximizar el uso de mis ingredientes disponibles y acceder a servicios culinarios profesionales cuando lo necesite.
+
+#### Criterios de Aceptación
+
+1. CUANDO el usuario configure su perfil ENTONCES el sistema DEBERÁ ofrecer activar el "Modo Chef Personal" como funcionalidad opcional
+2. CUANDO el usuario active el Modo Chef Personal ENTONCES el sistema DEBERÁ analizar las existencias actuales del inventario para generar sugerencias de recetas
+3. CUANDO el sistema genere sugerencias de recetas ENTONCES el sistema DEBERÁ priorizar recetas que utilicen ingredientes próximos a caducar
+4. CUANDO el usuario seleccione una receta ENTONCES el sistema DEBERÁ mostrar qué existencias específicas del inventario se pueden usar y cuáles faltan
+5. CUANDO el usuario confirme cocinar una receta ENTONCES el sistema DEBERÁ permitir marcar automáticamente las existencias utilizadas como consumidas
+6. CUANDO el usuario busque servicios de chef privado ENTONCES el sistema DEBERÁ mostrar chefs disponibles para meal prep semanal en su área
+7. CUANDO el usuario contrate un chef privado ENTONCES el sistema DEBERÁ permitir compartir su inventario actual y restricciones alimentarias con el chef
+8. CUANDO el chef planifique el meal prep ENTONCES el sistema DEBERÁ generar una lista de compras complementaria basada en el inventario existente
+9. CUANDO el usuario complete una sesión de meal prep ENTONCES el sistema DEBERÁ actualizar el inventario con las comidas preparadas y sus fechas de consumo recomendadas
+10. CUANDO el usuario visualize su planificación semanal ENTONCES el sistema DEBERÁ mostrar comidas preparadas, ingredientes disponibles y sugerencias de recetas
+11. CUANDO el usuario configure preferencias culinarias ENTONCES el sistema DEBERÁ permitir especificar tipos de cocina preferidos, nivel de dificultad y tiempo de preparación
+12. CUANDO el sistema detecte ingredientes subutilizados ENTONCES el sistema DEBERÁ sugerir recetas específicas para aprovechar esos productos antes de que caduquen

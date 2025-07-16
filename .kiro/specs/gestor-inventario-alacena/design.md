@@ -310,6 +310,12 @@ abstract class ModoEspecializado {
 - Categorías: tornillería, herramientas, materiales de construcción
 - Validaciones: compatibilidad de materiales y herramientas
 
+**Modo Chef Personal**
+- Campos adicionales: preferencias culinarias, nivel de dificultad, tiempo de preparación
+- Categorías: ingredientes frescos, comidas preparadas, servicios de chef
+- Lógica especial: generación de recetas basada en inventario actual, integración con servicios de chef privado
+- Funcionalidades: análisis de ingredientes próximos a caducar, planificación de meal prep, marketplace de chefs
+
 ### Registro y Activación de Modos
 
 ```dart
@@ -323,6 +329,7 @@ class RegistroModos {
     'jardineria': ModoJardineria(),
     'huerta': ModoHuertaUrbana(),
     'ferreteria': ModoFerreteria(),
+    'chef': ModoChefPersonal(),
   };
   
   static List<ModoEspecializado> get modosDisponibles => _modos.values.toList();

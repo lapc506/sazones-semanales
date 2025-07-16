@@ -144,6 +144,14 @@
     - Implementar validaciones de compatibilidad de materiales
     - _Requerimientos: 5.8_
 
+  - [ ] 9.4 Implementar Modo Chef Personal
+    - Refactorizar código existente de meal prep para integrarlo como modo especializado
+    - Crear generador de recetas basado en inventario actual
+    - Implementar análisis de ingredientes próximos a caducar para sugerencias de recetas
+    - Integrar funcionalidad de marketplace de chefs privados existente
+    - Crear sistema de planificación de meal prep semanal
+    - _Requerimientos: 19_
+
 - [ ] 10. Implementar pantallas de configuración y análisis
   - [ ] 10.1 Crear pantalla de configuración de modos
     - Implementar activación/desactivación de modos especializados
