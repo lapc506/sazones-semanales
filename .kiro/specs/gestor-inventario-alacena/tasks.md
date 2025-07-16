@@ -1,6 +1,12 @@
 # Plan de Implementación - Gestor de Inventario de Alacena
 
-- [ ] 1. Configurar estructura del proyecto y dependencias básicas
+- [x] 1. Configurar estructura del proyecto y dependencias básicas
+
+
+
+
+
+
   - Crear estructura de carpetas siguiendo Clean Architecture (domain, application, infrastructure, presentation)
   - Configurar dependencias en pubspec.yaml (sqflite, provider, camera, speech_to_text, flutter_local_notifications)
   - Configurar permisos en Android e iOS para cámara, micrófono y notificaciones
