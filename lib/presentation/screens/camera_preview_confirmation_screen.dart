@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:sazones_semanales/core/constants/app_constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CameraPreviewConfirmationScreen extends StatelessWidget {
   final File imageFile;
@@ -19,10 +21,17 @@ class CameraPreviewConfirmationScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text(
+        title: Text(
           'Vista Previa',
-          style: TextStyle(color: Colors.white),
+          style: GoogleFonts.getFont(
+            AppConstants.primaryFont,
+            fontSize: AppConstants.fontSizeAppBarTitle,
+            fontWeight: AppConstants.fontWeightBold,
+            color: Colors.white,
+          ),
         ),
+        centerTitle: true,
+        elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Column(
@@ -51,7 +60,14 @@ class CameraPreviewConfirmationScreen extends StatelessWidget {
                     onRetake();
                   },
                   icon: const Icon(Icons.camera_alt),
-                  label: const Text('Retomar'),
+                  label: Text(
+                    'Retomar',
+                    style: GoogleFonts.getFont(
+                      AppConstants.primaryFont,
+                      fontSize: AppConstants.fontSizeButton,
+                      fontWeight: AppConstants.fontWeightMedium,
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[700],
                     foregroundColor: Colors.white,
@@ -69,7 +85,14 @@ class CameraPreviewConfirmationScreen extends StatelessWidget {
                     onConfirm();
                   },
                   icon: const Icon(Icons.check),
-                  label: const Text('Confirmar'),
+                  label: Text(
+                    'Confirmar',
+                    style: GoogleFonts.getFont(
+                      AppConstants.primaryFont,
+                      fontSize: AppConstants.fontSizeButton,
+                      fontWeight: AppConstants.fontWeightMedium,
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                     foregroundColor: Colors.white,

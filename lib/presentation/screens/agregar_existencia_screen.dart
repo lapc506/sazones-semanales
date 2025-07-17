@@ -9,6 +9,8 @@ import 'package:sazones_semanales/domain/entities/producto_base.dart';
 import 'package:sazones_semanales/presentation/providers/agregar_existencia_provider.dart';
 import 'package:sazones_semanales/presentation/widgets/barcode_scanner_button.dart';
 import 'package:sazones_semanales/presentation/widgets/image_capture_widget.dart';
+import 'package:sazones_semanales/core/constants/app_constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Referencias explícitas a las clases para evitar advertencias de imports no utilizados
 // ignore: unused_element
@@ -32,10 +34,12 @@ class _AgregarExistenciaScreenContent extends StatefulWidget {
   const _AgregarExistenciaScreenContent();
 
   @override
-  State<_AgregarExistenciaScreenContent> createState() => _AgregarExistenciaScreenContentState();
+  State<_AgregarExistenciaScreenContent> createState() =>
+      _AgregarExistenciaScreenContentState();
 }
 
-class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScreenContent> {
+class _AgregarExistenciaScreenContentState
+    extends State<_AgregarExistenciaScreenContent> {
   final _formKey = GlobalKey<FormState>();
   final _codigoBarrasController = TextEditingController();
   final _nombreProductoController = TextEditingController();
@@ -57,10 +61,22 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AgregarExistenciaProvider>(context);
-    
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Agregar Producto'),
+        title: Text(
+          'Agregar Producto',
+          style: GoogleFonts.getFont(
+            AppConstants.primaryFont,
+            fontSize: AppConstants.fontSizeAppBarTitle,
+            fontWeight: AppConstants.fontWeightBold,
+            color: AppConstants.appBarForegroundColor,
+          ),
+        ),
+        backgroundColor: AppConstants.appBarBackgroundColor,
+        foregroundColor: AppConstants.appBarForegroundColor,
+        centerTitle: true,
+        elevation: 0,
       ),
       body: provider.isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -108,14 +124,18 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
       ),
     );
   }
-  
+
   Widget _buildImageCaptureField(AgregarExistenciaProvider provider) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Foto del Producto',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: GoogleFonts.getFont(
+            AppConstants.primaryFont,
+            fontSize: AppConstants.fontSizeSubheading,
+            fontWeight: AppConstants.fontWeightBold,
+          ),
         ),
         const SizedBox(height: 8),
         ImageCaptureWidget(
@@ -132,9 +152,13 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Código de Barras',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: GoogleFonts.getFont(
+            AppConstants.primaryFont,
+            fontSize: AppConstants.fontSizeSubheading,
+            fontWeight: AppConstants.fontWeightBold,
+          ),
         ),
         const SizedBox(height: 8),
         Row(
@@ -181,9 +205,13 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Nombre del Producto',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: GoogleFonts.getFont(
+            AppConstants.primaryFont,
+            fontSize: AppConstants.fontSizeSubheading,
+            fontWeight: AppConstants.fontWeightBold,
+          ),
         ),
         const SizedBox(height: 8),
         Autocomplete<String>(
@@ -199,11 +227,13 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
           },
           fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
             // Asignar el controller del autocomplete a nuestro controller
-            if (_nombreProductoController.text.isEmpty && provider.productoSeleccionado != null) {
+            if (_nombreProductoController.text.isEmpty &&
+                provider.productoSeleccionado != null) {
               controller.text = provider.productoSeleccionado!.nombre;
-              _nombreProductoController.text = provider.productoSeleccionado!.nombre;
+              _nombreProductoController.text =
+                  provider.productoSeleccionado!.nombre;
             }
-            
+
             return TextFormField(
               controller: controller,
               focusNode: focusNode,
@@ -234,9 +264,13 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Categoría',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: GoogleFonts.getFont(
+            AppConstants.primaryFont,
+            fontSize: AppConstants.fontSizeSubheading,
+            fontWeight: AppConstants.fontWeightBold,
+          ),
         ),
         const SizedBox(height: 8),
         Autocomplete<String>(
@@ -244,19 +278,22 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
             if (textEditingValue.text.isEmpty) {
               return provider.categorias;
             }
-            return provider.categorias.where((categoria) =>
-                categoria.toLowerCase().contains(textEditingValue.text.toLowerCase()));
+            return provider.categorias.where((categoria) => categoria
+                .toLowerCase()
+                .contains(textEditingValue.text.toLowerCase()));
           },
           onSelected: (String selection) {
             _categoriaController.text = selection;
           },
           fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
             // Asignar el controller del autocomplete a nuestro controller
-            if (_categoriaController.text.isEmpty && provider.productoSeleccionado != null) {
+            if (_categoriaController.text.isEmpty &&
+                provider.productoSeleccionado != null) {
               controller.text = provider.productoSeleccionado!.categoria;
-              _categoriaController.text = provider.productoSeleccionado!.categoria;
+              _categoriaController.text =
+                  provider.productoSeleccionado!.categoria;
             }
-            
+
             return TextFormField(
               controller: controller,
               focusNode: focusNode,
@@ -284,9 +321,13 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Precio',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: GoogleFonts.getFont(
+            AppConstants.primaryFont,
+            fontSize: AppConstants.fontSizeSubheading,
+            fontWeight: AppConstants.fontWeightBold,
+          ),
         ),
         const SizedBox(height: 8),
         TextFormField(
@@ -319,9 +360,13 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Fecha de Compra',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: GoogleFonts.getFont(
+            AppConstants.primaryFont,
+            fontSize: AppConstants.fontSizeSubheading,
+            fontWeight: AppConstants.fontWeightBold,
+          ),
         ),
         const SizedBox(height: 8),
         InkWell(
@@ -338,7 +383,11 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
                 const SizedBox(width: 8),
                 Text(
                   DateFormat('dd/MM/yyyy').format(_fechaCompra),
-                  style: const TextStyle(fontSize: 16),
+                  style: GoogleFonts.getFont(
+                    AppConstants.primaryFont,
+                    fontSize: AppConstants.fontSizeBody,
+                    fontWeight: AppConstants.fontWeightMedium,
+                  ),
                 ),
               ],
             ),
@@ -355,7 +404,7 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
       firstDate: DateTime(2020),
       lastDate: DateTime.now(),
     );
-    
+
     if (fecha != null) {
       setState(() {
         _fechaCompra = fecha;
@@ -369,9 +418,13 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
       children: [
         Row(
           children: [
-            const Text(
+            Text(
               'Tipo de Perecibilidad',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: GoogleFonts.getFont(
+                AppConstants.primaryFont,
+                fontSize: AppConstants.fontSizeSubheading,
+                fontWeight: AppConstants.fontWeightBold,
+              ),
             ),
             const SizedBox(width: 8),
             IconButton(
@@ -405,8 +458,10 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
         const SizedBox(height: 4),
         Text(
           _getPerecibilidadDescription(_perecibilidad),
-          style: TextStyle(
-            fontSize: 12,
+          style: GoogleFonts.getFont(
+            AppConstants.primaryFont,
+            fontSize: AppConstants.fontSizeCaption,
+            fontWeight: AppConstants.fontWeightMedium,
             color: Colors.grey[600],
             fontStyle: FontStyle.italic,
           ),
@@ -414,7 +469,7 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
       ],
     );
   }
-  
+
   String _getPerecibilidadDescription(TipoPerecibilidad tipo) {
     switch (tipo) {
       case TipoPerecibilidad.perecedero:
@@ -427,12 +482,19 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
         return 'Alerta: 90 días antes de caducar. Ej: Enlatados, pasta seca, arroz, especias.';
     }
   }
-  
+
   void _mostrarAyudaPerecibilidad(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Tipos de Perecibilidad'),
+        title: Text(
+          'Tipos de Perecibilidad',
+          style: GoogleFonts.getFont(
+            AppConstants.primaryFont,
+            fontSize: AppConstants.fontSizeSubheading,
+            fontWeight: AppConstants.fontWeightBold,
+          ),
+        ),
         content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -481,7 +543,7 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
       ),
     );
   }
-  
+
   Widget _buildPerecibilidadInfo(
     String titulo,
     String descripcion,
@@ -507,26 +569,41 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
               const SizedBox(width: 8),
               Text(
                 titulo,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                style: GoogleFonts.getFont(
+                  AppConstants.primaryFont,
+                  fontSize: AppConstants.fontSizeSubheading,
+                  fontWeight: AppConstants.fontWeightBold,
                 ),
               ),
             ],
           ),
           const SizedBox(height: 4),
-          Text(descripcion),
+          Text(
+            descripcion,
+            style: GoogleFonts.getFont(
+              AppConstants.primaryFont,
+              fontSize: AppConstants.fontSizeBody,
+              fontWeight: AppConstants.fontWeightMedium,
+            ),
+          ),
           const SizedBox(height: 4),
           Text(
             'Ejemplos: $ejemplos',
-            style: const TextStyle(fontStyle: FontStyle.italic),
+            style: GoogleFonts.getFont(
+              AppConstants.primaryFont,
+              fontSize: AppConstants.fontSizeBody,
+              fontWeight: AppConstants.fontWeightMedium,
+              fontStyle: FontStyle.italic,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
             'Alerta: $alerta antes de la fecha de caducidad',
-            style: TextStyle(
+            style: GoogleFonts.getFont(
+              AppConstants.primaryFont,
+              fontSize: AppConstants.fontSizeBody,
+              fontWeight: AppConstants.fontWeightBold,
               color: color,
-              fontWeight: FontWeight.bold,
             ),
           ),
         ],
@@ -538,9 +615,13 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Fecha de Caducidad (opcional)',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: GoogleFonts.getFont(
+            AppConstants.primaryFont,
+            fontSize: AppConstants.fontSizeSubheading,
+            fontWeight: AppConstants.fontWeightBold,
+          ),
         ),
         const SizedBox(height: 8),
         InkWell(
@@ -559,8 +640,10 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
                   _fechaCaducidad != null
                       ? DateFormat('dd/MM/yyyy').format(_fechaCaducidad!)
                       : 'Seleccionar fecha de caducidad',
-                  style: TextStyle(
-                    fontSize: 16,
+                  style: GoogleFonts.getFont(
+                    AppConstants.primaryFont,
+                    fontSize: AppConstants.fontSizeBody,
+                    fontWeight: AppConstants.fontWeightMedium,
                     color: _fechaCaducidad != null ? Colors.black : Colors.grey,
                   ),
                 ),
@@ -585,11 +668,12 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
   Future<void> _seleccionarFechaCaducidad(BuildContext context) async {
     final fecha = await showDatePicker(
       context: context,
-      initialDate: _fechaCaducidad ?? DateTime.now().add(const Duration(days: 30)),
+      initialDate:
+          _fechaCaducidad ?? DateTime.now().add(const Duration(days: 30)),
       firstDate: DateTime.now(),
       lastDate: DateTime(2100),
     );
-    
+
     if (fecha != null) {
       setState(() {
         _fechaCaducidad = fecha;
@@ -601,9 +685,13 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Proveedor',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: GoogleFonts.getFont(
+            AppConstants.primaryFont,
+            fontSize: AppConstants.fontSizeSubheading,
+            fontWeight: AppConstants.fontWeightBold,
+          ),
         ),
         const SizedBox(height: 8),
         DropdownButtonFormField<String>(
@@ -635,7 +723,9 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
           onPressed: () {
             // TODO: Implementar navegación a pantalla de agregar proveedor
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Funcionalidad de agregar proveedor pendiente')),
+              const SnackBar(
+                  content:
+                      Text('Funcionalidad de agregar proveedor pendiente')),
             );
           },
           icon: const Icon(Icons.add),
@@ -650,12 +740,18 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
       width: double.infinity,
       height: 50,
       child: ElevatedButton(
-        onPressed: provider.isSubmitting
-            ? null
-            : () => _guardarExistencia(provider),
+        onPressed:
+            provider.isSubmitting ? null : () => _guardarExistencia(provider),
         child: provider.isSubmitting
             ? const CircularProgressIndicator()
-            : const Text('Guardar Producto', style: TextStyle(fontSize: 16)),
+            : Text(
+                'Guardar Producto',
+                style: GoogleFonts.getFont(
+                  AppConstants.primaryFont,
+                  fontSize: AppConstants.fontSizeButton,
+                  fontWeight: AppConstants.fontWeightMedium,
+                ),
+              ),
       ),
     );
   }
@@ -663,7 +759,7 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
   void _guardarExistencia(AgregarExistenciaProvider provider) async {
     if (_formKey.currentState?.validate() ?? false) {
       final precio = double.tryParse(_precioController.text) ?? 0.0;
-      
+
       final resultado = await provider.guardarExistencia(
         codigoBarras: _codigoBarrasController.text,
         nombreProducto: _nombreProductoController.text,
@@ -673,7 +769,7 @@ class _AgregarExistenciaScreenContentState extends State<_AgregarExistenciaScree
         precio: precio,
         perecibilidad: _perecibilidad,
       );
-      
+
       if (resultado && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Producto agregado correctamente')),

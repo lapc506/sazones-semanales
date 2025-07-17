@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sazones_semanales/presentation/widgets/speech_recognition_button.dart';
+import 'package:sazones_semanales/core/constants/app_constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /// A demo screen for the speech recognition service
 class SpeechRecognitionDemoScreen extends StatefulWidget {
@@ -21,24 +23,44 @@ class SpeechRecognitionDemoScreenState extends State<SpeechRecognitionDemoScreen
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Reconocimiento de Voz'),
+        title: Text(
+          'Reconocimiento de Voz',
+          style: GoogleFonts.getFont(
+            AppConstants.primaryFont,
+            fontSize: AppConstants.fontSizeAppBarTitle,
+            fontWeight: AppConstants.fontWeightBold,
+            color: AppConstants.appBarForegroundColor,
+          ),
+        ),
+        backgroundColor: AppConstants.appBarBackgroundColor,
+        foregroundColor: AppConstants.appBarForegroundColor,
+        centerTitle: true,
+        elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Instrucciones:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: GoogleFonts.getFont(
+                AppConstants.primaryFont,
+                fontSize: AppConstants.fontSizeSubheading,
+                fontWeight: AppConstants.fontWeightBold,
+              ),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Presiona el botón y di algo como:\n'
               '- "Voy a usar 2 manzanas y 1 limón"\n'
               '- "Consumiré 3 huevos y 2 tomates"\n'
               '- "Gastaré 1 paquete de pasta"',
-              style: TextStyle(fontSize: 16),
+              style: GoogleFonts.getFont(
+                AppConstants.primaryFont,
+                fontSize: AppConstants.fontSizeBody,
+                fontWeight: AppConstants.fontWeightMedium,
+              ),
             ),
             const SizedBox(height: 24),
             Center(
@@ -57,19 +79,31 @@ class SpeechRecognitionDemoScreenState extends State<SpeechRecognitionDemoScreen
             ),
             const SizedBox(height: 32),
             if (_lastRecognizedText != null) ...[
-              const Text(
+              Text(
                 'Texto reconocido:',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: GoogleFonts.getFont(
+                  AppConstants.primaryFont,
+                  fontSize: AppConstants.fontSizeSubheading,
+                  fontWeight: AppConstants.fontWeightBold,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
                 _lastRecognizedText!,
-                style: const TextStyle(fontSize: 16),
+                style: GoogleFonts.getFont(
+                  AppConstants.primaryFont,
+                  fontSize: AppConstants.fontSizeBody,
+                  fontWeight: AppConstants.fontWeightMedium,
+                ),
               ),
               const SizedBox(height: 24),
-              const Text(
+              Text(
                 'Productos reconocidos:',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: GoogleFonts.getFont(
+                  AppConstants.primaryFont,
+                  fontSize: AppConstants.fontSizeSubheading,
+                  fontWeight: AppConstants.fontWeightBold,
+                ),
               ),
               const SizedBox(height: 8),
               if (_recognizedProducts.isEmpty)

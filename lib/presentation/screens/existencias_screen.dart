@@ -6,6 +6,8 @@ import 'package:sazones_semanales/presentation/screens/agregar_existencia_screen
 import 'package:sazones_semanales/presentation/widgets/existencia_card.dart';
 import 'package:sazones_semanales/presentation/widgets/filtro_categorias.dart';
 import 'package:sazones_semanales/presentation/widgets/filtro_estados.dart';
+import 'package:sazones_semanales/core/constants/app_constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ExistenciasScreen extends StatelessWidget {
   const ExistenciasScreen({super.key});
@@ -26,7 +28,19 @@ class _ExistenciasScreenContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Existencias en el Inventario de tu Despensa'),
+        title: Text(
+          'Existencias en tu Despensa',
+          style: GoogleFonts.getFont(
+            AppConstants.primaryFont,
+            fontSize: AppConstants.fontSizeAppBarTitle,
+            fontWeight: AppConstants.fontWeightBold,
+            color: AppConstants.appBarForegroundColor,
+          ),
+        ),
+        backgroundColor: AppConstants.appBarBackgroundColor,
+        foregroundColor: AppConstants.appBarForegroundColor,
+        centerTitle: true,
+        elevation: 0,
         actions: [
           IconButton(
             icon: const Icon(Icons.filter_list),
@@ -49,10 +63,11 @@ class _ExistenciasScreenContent extends StatelessWidget {
               builder: (context) => const AgregarExistenciaScreen(),
             ),
           );
-          
+
           // Si se agregó una existencia, recargar la lista
           if (result == true) {
-            final provider = Provider.of<ExistenciasProvider>(context, listen: false);
+            final provider =
+                Provider.of<ExistenciasProvider>(context, listen: false);
             provider.recargarExistencias();
           }
         },
@@ -63,7 +78,7 @@ class _ExistenciasScreenContent extends StatelessWidget {
 
   Widget _buildSearchBar(BuildContext context) {
     final provider = Provider.of<ExistenciasProvider>(context);
-    
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
@@ -91,39 +106,61 @@ class _ExistenciasScreenContent extends StatelessWidget {
 
   Widget _buildExistenciasList(BuildContext context) {
     final provider = Provider.of<ExistenciasProvider>(context);
-    
+
     if (provider.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-    
+
     if (provider.existencias.isEmpty) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.inventory_2_outlined, size: 64, color: Colors.grey),
+            const Icon(Icons.inventory_2_outlined,
+                size: 64, color: Colors.grey),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'No hay productos en tu inventario',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: GoogleFonts.getFont(
+                AppConstants.primaryFont,
+                fontSize: AppConstants.fontSizeHeading,
+                fontWeight: AppConstants.fontWeightBold,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
             const SizedBox(height: 8),
             Text(
-              provider.textoBusqueda.isNotEmpty || provider.filtroCategoria != null || provider.filtroEstado != EstadoExistencia.disponible
+              provider.textoBusqueda.isNotEmpty ||
+                      provider.filtroCategoria != null ||
+                      provider.filtroEstado != EstadoExistencia.disponible
                   ? 'Prueba con otros filtros de búsqueda'
                   : 'Agrega productos usando el botón +',
-              style: const TextStyle(color: Colors.grey),
+              style: GoogleFonts.getFont(
+                AppConstants.primaryFont,
+                fontSize: AppConstants.fontSizeBody,
+                fontWeight: AppConstants.fontWeightMedium,
+                color: Colors.grey,
+              ),
             ),
-            if (provider.textoBusqueda.isNotEmpty || provider.filtroCategoria != null || provider.filtroEstado != EstadoExistencia.disponible)
+            if (provider.textoBusqueda.isNotEmpty ||
+                provider.filtroCategoria != null ||
+                provider.filtroEstado != EstadoExistencia.disponible)
               TextButton(
                 onPressed: () => provider.limpiarFiltros(),
-                child: const Text('Limpiar filtros'),
+                child: Text(
+                  'Limpiar filtros',
+                  style: GoogleFonts.getFont(
+                    AppConstants.primaryFont,
+                    fontSize: AppConstants.fontSizeButton,
+                    fontWeight: AppConstants.fontWeightMedium,
+                  ),
+                ),
               ),
           ],
         ),
       );
     }
-    
+
     return RefreshIndicator(
       onRefresh: () => provider.recargarExistencias(),
       child: ListView.builder(
@@ -142,7 +179,7 @@ class _ExistenciasScreenContent extends StatelessWidget {
 
   void _mostrarFiltros(BuildContext context) {
     final provider = Provider.of<ExistenciasProvider>(context, listen: false);
-    
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -163,21 +200,25 @@ class _ExistenciasScreenContent extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Center(
+                    Center(
                       child: Text(
                         'Filtros',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                        style: GoogleFonts.getFont(
+                          AppConstants.primaryFont,
+                          fontSize: AppConstants.fontSizeHeading,
+                          fontWeight: AppConstants.fontWeightBold,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ),
                     const SizedBox(height: 16),
-                    const Text(
+                    Text(
                       'Categoría',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                      style: GoogleFonts.getFont(
+                        AppConstants.primaryFont,
+                        fontSize: AppConstants.fontSizeSubheading,
+                        fontWeight: AppConstants.fontWeightBold,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -190,11 +231,13 @@ class _ExistenciasScreenContent extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: 16),
-                    const Text(
+                    Text(
                       'Estado',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                      style: GoogleFonts.getFont(
+                        AppConstants.primaryFont,
+                        fontSize: AppConstants.fontSizeSubheading,
+                        fontWeight: AppConstants.fontWeightBold,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -213,7 +256,14 @@ class _ExistenciasScreenContent extends StatelessWidget {
                           provider.limpiarFiltros();
                           Navigator.pop(context);
                         },
-                        child: const Text('Limpiar filtros'),
+                        child: Text(
+                          'Limpiar filtros',
+                          style: GoogleFonts.getFont(
+                            AppConstants.primaryFont,
+                            fontSize: AppConstants.fontSizeButton,
+                            fontWeight: AppConstants.fontWeightMedium,
+                          ),
+                        ),
                       ),
                     ),
                   ],

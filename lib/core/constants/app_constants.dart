@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppConstants {
   // Database constants
@@ -28,7 +29,7 @@ class AppConstants {
   static const String secondaryFont = 'Ubuntu';
   
   // Font sizes
-  static const double fontSizeAppBarTitle = 32.0;
+  static const double fontSizeAppBarTitle = 16.0;
   static const double fontSizeHeading = 20.0;
   static const double fontSizeSubheading = 16.0;
   static const double fontSizeBody = 14.0;
@@ -41,4 +42,17 @@ class AppConstants {
   static const FontWeight fontWeightMedium = FontWeight.w500;
   static const FontWeight fontWeightSemiBold = FontWeight.w600;
   static const FontWeight fontWeightBold = FontWeight.w700;
+
+  static const Color appBarBackgroundColor = Color(0xFF4A148C);
+  static const Color appBarForegroundColor = Colors.white;
+
+  static AppBarTheme appBarTheme = AppBarTheme(
+    titleTextStyle: GoogleFonts.getFont(
+      AppConstants.primaryFont,
+      fontSize: AppConstants.fontSizeAppBarTitle,
+      fontWeight: FontWeight.bold,
+      backgroundColor: AppConstants.appBarBackgroundColor,
+      color: Colors.white,
+    ),
+  );
 }

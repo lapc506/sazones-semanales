@@ -40,7 +40,7 @@ class GestorInventarioApp extends StatelessWidget {
             AppConstants.primaryFont,
             fontSize: AppConstants.fontSizeAppBarTitle,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppConstants.appBarForegroundColor,
           ),
         ),
         // Aplicar la fuente a los botones
@@ -71,12 +71,12 @@ class HomeScreen extends StatelessWidget {
           style: GoogleFonts.getFont(
             AppConstants.primaryFont,
             color: Colors.white,
-            fontSize: AppConstants.fontSizeAppBarTitle,
+            fontSize: 32,
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Color(0xFF4A148C), // Morado oscuro
-        foregroundColor: Colors.white,
+        backgroundColor: AppConstants.appBarBackgroundColor,
+        foregroundColor: AppConstants.appBarForegroundColor,
         centerTitle: true,
         elevation: 0,
       ),
