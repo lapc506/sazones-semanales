@@ -24,8 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.lapc506.portfolio.mobile.sazones_semanales"
-    // Usando SDK 36 explícitamente para compatibilidad con el plugin camera_android
-    // En lugar de usar flutter.compileSdkVersion que actualmente es menor
+    // Using a valid SDK version that exists
     compileSdkVersion 36
     ndkVersion flutter.ndkVersion
 

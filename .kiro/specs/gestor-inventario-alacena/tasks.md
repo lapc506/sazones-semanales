@@ -33,7 +33,9 @@
     - Crear tipos para comandos de voz y configuraciones
     - _Requerimientos: 3.1, 3.2, 3.3, 4.1_
 
-- [-] 3. Implementar capa de infraestructura - Base de datos
+- [x] 3. Implementar capa de infraestructura - Base de datos
+
+
 
 
 
@@ -61,19 +63,35 @@
     - _Requerimientos: 1.1, 1.2, 2.1, 2.2, 6.1_
 
 - [ ] 4. Implementar servicios de dispositivo
-  - [ ] 4.1 Implementar servicio de escáner de códigos de barras
+
+
+
+
+
+  - [x] 4.1 Implementar servicio de escáner de códigos de barras
+
+
     - Configurar cámara para escaneo de códigos de barras
     - Implementar validación de formatos de códigos de barras
     - Crear fallback para entrada manual de códigos
     - _Requerimientos: 1.1, 1.2_
 
-  - [ ] 4.2 Implementar servicio de reconocimiento de voz
+
+  - [x] 4.2 Implementar servicio de reconocimiento de voz
+
+
+
     - Configurar speech_to_text para comandos de consumo
     - Implementar parser de comandos de voz en español
     - Crear lógica de búsqueda por nombre de producto
     - _Requerimientos: 4.1, 4.2_
 
-  - [ ] 4.3 Implementar servicio de notificaciones locales
+  - [x] 4.3 Implementar servicio de notificaciones locales
+
+
+
+
+
     - Configurar flutter_local_notifications
     - Implementar programación de notificaciones por fecha de caducidad
     - Crear diferentes tipos de notificaciones según perecibilidad

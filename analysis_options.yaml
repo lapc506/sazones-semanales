@@ -10,6 +10,7 @@
 analyzer:
   errors:
     file_names: ignore
+    unintended_html_in_doc_comment: ignore
 include: package:flutter_lints/flutter.yaml
 
 linter:
