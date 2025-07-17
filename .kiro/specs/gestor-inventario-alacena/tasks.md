@@ -71,6 +71,7 @@
 
 
 
+
   - [x] 4.1 Implementar servicio de escáner de códigos de barras
 
 
@@ -100,21 +101,32 @@
     - Crear diferentes tipos de notificaciones según perecibilidad
     - _Requerimientos: 3.1, 3.2, 3.3_
 
-- [ ] 5. Implementar casos de uso de la aplicación
-  - [ ] 5.1 Casos de uso para gestión de existencias
+- [x] 5. Implementar casos de uso de la aplicación
+
+
+
+
+  - [x] 5.1 Casos de uso para gestión de existencias
+
+
     - Implementar AgregarExistenciaUseCase con validaciones
     - Implementar MarcarComoConsumidaUseCase
     - Implementar BuscarExistenciasUseCase con filtros
     - Crear tests unitarios para casos de uso
     - _Requerimientos: 1.1, 1.2, 4.1, 4.2_
 
-  - [ ] 5.2 Casos de uso para análisis de precios
+
+  - [x] 5.2 Casos de uso para análisis de precios
+
     - Implementar CalcularPromediosPreciosUseCase
     - Implementar CompararPreciosProveedoresUseCase
     - Implementar GenerarReporteGastosUseCase
     - _Requerimientos: 6.1, 6.2_
 
-  - [ ] 5.3 Casos de uso para gestión de proveedores
+
+  - [x] 5.3 Casos de uso para gestión de proveedores
+
+
     - Implementar AgregarProveedorUseCase
     - Implementar AsociarCompraProveedorUseCase
     - Implementar ObtenerHistorialProveedorUseCase
