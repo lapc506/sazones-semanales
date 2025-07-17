@@ -1,4 +1,4 @@
-import 'package:sazones_semanales/domain/entities/existencia.dart';
+import 'package:sazones_semanales/domain/entities/entities.dart';
 import 'package:sazones_semanales/domain/repositories/existencia_repository.dart';
 import 'package:sazones_semanales/domain/services/notification_service.dart';
 import 'package:sazones_semanales/infrastructure/services/service_providers.dart';
