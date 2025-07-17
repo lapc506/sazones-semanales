@@ -62,7 +62,10 @@
     - Crear tests unitarios para repositorios
     - _Requerimientos: 1.1, 1.2, 2.1, 2.2, 6.1_
 
-- [ ] 4. Implementar servicios de dispositivo
+- [x] 4. Implementar servicios de dispositivo
+
+
+
 
 
 

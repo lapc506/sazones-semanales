@@ -15,16 +15,18 @@ void main() {
     test('initialize should not throw', () async {
       // This test will pass if initialize doesn't throw an exception
       // Note: This is a limited test since we can't fully test notifications in a test environment
-      expect(() async => await notificationService.initialize(), returnsNormally);
+      expect(
+          () async => await notificationService.initialize(), returnsNormally);
     });
 
     test('_determinarTipoNotificacion returns correct notification type', () {
       // Create a test instance of NotificationServiceImpl to access private methods
-      final notificationServiceImpl = notificationService as NotificationServiceImpl;
-      
+      final notificationServiceImpl =
+          notificationService as NotificationServiceImpl;
+
       // Create test existencias with different perishability types
       final now = DateTime.now();
-      
+
       // Perecedero with 1 day left
       final existenciaCritica = Existencia(
         id: '1',
@@ -39,7 +41,7 @@ void main() {
         createdAt: now,
         updatedAt: now,
       );
-      
+
       // SemiPerecedero with 4 days left
       final existenciaAdvertencia = Existencia(
         id: '2',
@@ -54,7 +56,7 @@ void main() {
         createdAt: now,
         updatedAt: now,
       );
-      
+
       // PocoPerecedero with 10 days left
       final existenciaPrecaucion = Existencia(
         id: '3',
@@ -69,7 +71,7 @@ void main() {
         createdAt: now,
         updatedAt: now,
       );
-      
+
       // Caducado
       final existenciaCaducada = Existencia(
         id: '4',
@@ -84,29 +86,31 @@ void main() {
         createdAt: now,
         updatedAt: now,
       );
-      
-      // Test the private method using reflection
+
+      // Test using the public method for testing
       expect(
-        notificationServiceImpl._determinarTipoNotificacion(existenciaCritica),
+        notificationServiceImpl.determinarTipoNotificacionParaPruebas(existenciaCritica),
         TipoNotificacion.critica,
       );
-      
+
       expect(
-        notificationServiceImpl._determinarTipoNotificacion(existenciaAdvertencia),
+        notificationServiceImpl
+            .determinarTipoNotificacionParaPruebas(existenciaAdvertencia),
         TipoNotificacion.advertencia,
       );
-      
+
       expect(
-        notificationServiceImpl._determinarTipoNotificacion(existenciaPrecaucion),
+        notificationServiceImpl
+            .determinarTipoNotificacionParaPruebas(existenciaPrecaucion),
         TipoNotificacion.precaucion,
       );
-      
+
       expect(
-        notificationServiceImpl._determinarTipoNotificacion(existenciaCaducada),
+        notificationServiceImpl.determinarTipoNotificacionParaPruebas(existenciaCaducada),
         TipoNotificacion.caducado,
       );
     });
-    
+
     // Note: Most notification functionality can't be fully tested in a test environment
     // as it requires actual device integration. These tests are limited to what can be
     // tested in isolation.
