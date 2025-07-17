@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ca2ed795-3ff5-4247-bbba-961a2d02dfde" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/KotlinJavaRuntime.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/main_dart.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.kiro/specs/gestor-inventario-alacena/tasks.md" beforeDir="false" afterPath="$PROJECT_DIR$/.kiro/specs/gestor-inventario-alacena/tasks.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/backend/api/unsplash_api_service.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/backend/config/config.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/backend/database/database_service.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/backend/database/models/user_model.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/backend/local_storage/storage_service.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/frontend/components/custom_button.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/frontend/themes/app_theme.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/frontend/views/home/homepage_view.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/frontend/views/home/homepage_viewmodel.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/sql/postgres_config/podman-compose-dev.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/sql/postgres_config/podman-compose-prod.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/sql/postgres_config/shutdown.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/sql/postgres_config/shutdown.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/sql/postgres_config/startup.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/sql/postgres_config/startup.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/state_providers/user_provider.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sazones_semanales.iml" beforeDir="false" afterPath="$PROJECT_DIR$/sazones_semanales.iml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2zyfsPciPzok2zFpOQkNdQgjvu1" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "SDK Location",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.0",
+    "show.migrate.to.gradle.popup": "false"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ca2ed795-3ff5-4247-bbba-961a2d02dfde" name="Changes" comment="" />
+      <created>1752708444037</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1752708444037</updated>
+    </task>
+    <servers />
+  </component>
+</project>

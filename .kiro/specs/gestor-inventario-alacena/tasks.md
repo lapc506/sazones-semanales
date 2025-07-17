@@ -12,27 +12,48 @@
   - Configurar permisos en Android e iOS para cámara, micrófono y notificaciones
   - _Requerimientos: 1.1, 1.2_
 
-- [ ] 2. Implementar entidades del dominio y modelos de datos
-  - [ ] 2.1 Crear entidades principales (Existencia, ProductoBase, Proveedor)
+- [x] 2. Implementar entidades del dominio y modelos de datos
+
+
+
+
+  - [x] 2.1 Crear entidades principales (Existencia, ProductoBase, Proveedor)
+
+
     - Implementar clase Existencia con todos los campos requeridos
     - Implementar clase ProductoBase para autocompletado
     - Implementar clase Proveedor con tipos de establecimiento
     - _Requerimientos: 1.1, 1.2, 2.1, 2.2_
 
-  - [ ] 2.2 Crear enums y tipos auxiliares
+  - [x] 2.2 Crear enums y tipos auxiliares
+
+
     - Implementar TipoPerecibilidad (PERECEDERO, SEMI_PERECEDERO, NO_PERECEDERO)
     - Implementar EstadoExistencia (DISPONIBLE, CONSUMIDA, CADUCADA)
     - Crear tipos para comandos de voz y configuraciones
     - _Requerimientos: 3.1, 3.2, 3.3, 4.1_
 
-- [ ] 3. Implementar capa de infraestructura - Base de datos
-  - [ ] 3.1 Configurar SQLite y crear esquema de base de datos
+- [-] 3. Implementar capa de infraestructura - Base de datos
+
+
+
+
+  - [x] 3.1 Configurar SQLite y crear esquema de base de datos
+
+
     - Implementar DatabaseHelper con creación de tablas
     - Crear índices para optimización de consultas
     - Implementar migraciones de base de datos
     - _Requerimientos: 1.1, 1.2, 2.1, 2.2_
 
-  - [ ] 3.2 Implementar repositorios concretos
+  - [x] 3.2 Implementar repositorios concretos
+
+
+
+
+
+
+
     - Implementar ExistenciaRepositoryImpl con operaciones CRUD
     - Implementar ProductoRepositoryImpl con búsqueda y autocompletado
     - Implementar ProveedorRepositoryImpl
