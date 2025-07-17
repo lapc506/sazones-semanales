@@ -133,25 +133,78 @@
     - _Requerimientos: 2.1, 2.2, 6.1_
 
 - [ ] 6. Implementar interfaz de usuario básica
-  - [ ] 6.1 Crear pantalla principal con lista de existencias
+
+
+
+
+
+  - [x] 6.1 Crear pantalla principal con lista de existencias
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     - Implementar ListView con existencias activas
     - Crear filtros por categoría y estado
     - Implementar búsqueda por nombre de producto
     - Mostrar indicadores visuales de caducidad próxima
     - _Requerimientos: 1.1, 1.2, 3.1, 3.2, 3.3_
 
-  - [ ] 6.2 Crear pantalla de agregar existencia
+  - [x] 6.2 Crear pantalla de agregar existencia
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     - Implementar formulario de captura de datos
     - Integrar escáner de códigos de barras
     - Implementar autocompletado de nombres de productos
     - Crear selector de proveedor y fecha de caducidad
-    - _Requerimientos: 1.1, 1.2, 2.1, 2.2_
+    - Implementar captura de foto del producto o selección desde galería como primer paso
+    - _Requerimientos: 1.1, 1.2, 1.3, 2.1, 2.2_
 
   - [ ] 6.3 Crear pantalla de consumo por voz
     - Implementar botón de grabación de comandos de voz
     - Mostrar resultados de búsqueda por comando
     - Crear confirmación visual antes de marcar como consumida
     - _Requerimientos: 4.1, 4.2_
+
+  - [x] 6.4 Mejorar experiencia de usuario de la cámara
+
+
+
+
+
+
+    - Implementar inicialización proactiva de la cámara para mostrar opciones inmediatamente
+    - Crear pantalla de vista previa de foto capturada con opciones de confirmar/retomar
+    - Implementar indicadores de carga durante inicialización de cámara
+    - Agregar transiciones suaves entre estados de cámara (inicializando, lista, capturando)
+    - Crear manejo de errores amigable con opciones de reintentar o usar galería
+    - _Requerimientos: 1.2, 1.3_
 
 - [ ] 7. Implementar sistema de modos especializados
   - [ ] 7.1 Crear arquitectura base para modos especializados

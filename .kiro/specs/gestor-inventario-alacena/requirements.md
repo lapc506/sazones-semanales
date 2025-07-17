@@ -13,9 +13,10 @@ Esta aplicación está diseñada para gestionar eficientemente el inventario de 
 #### Criterios de Aceptación
 
 1. CUANDO el usuario abra la aplicación después de ir de compras ENTONCES el sistema DEBERÁ mostrar una interfaz de registro rápido de productos con escáner de códigos de barras
-2. CUANDO el usuario escanee o ingrese un producto ENTONCES el sistema DEBERÁ crear una nueva existencia individual con fecha de compra, fecha de caducidad específica y precio pagado
-3. CUANDO el usuario registre múltiples unidades del mismo producto ENTONCES el sistema DEBERÁ crear existencias separadas para cada código de barras escaneado
-4. CUANDO el usuario complete el registro de compras ENTONCES el sistema DEBERÁ guardar todas las existencias individuales automáticamente
+2. CUANDO el usuario inicie el proceso de registro de un producto ENTONCES el sistema DEBERÁ solicitar primero tomar una foto del producto o seleccionar una imagen de la galería
+3. CUANDO el usuario escanee o ingrese un producto ENTONCES el sistema DEBERÁ crear una nueva existencia individual con fecha de compra, fecha de caducidad específica, precio pagado y la imagen del producto
+4. CUANDO el usuario registre múltiples unidades del mismo producto ENTONCES el sistema DEBERÁ crear existencias separadas para cada código de barras escaneado
+5. CUANDO el usuario complete el registro de compras ENTONCES el sistema DEBERÁ guardar todas las existencias individuales automáticamente
 
 ### Requisito 2
 

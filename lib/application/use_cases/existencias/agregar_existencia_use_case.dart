@@ -45,6 +45,7 @@ class AgregarExistenciaUseCase {
     required double precio,
     required String proveedorId,
     required TipoPerecibilidad perecibilidad,
+    String? imagenPath,
     Map<String, dynamic> metadatos = const {},
   }) async {
     // Validar datos de entrada
@@ -75,6 +76,7 @@ class AgregarExistenciaUseCase {
       proveedorId: proveedorId,
       perecibilidad: perecibilidad,
       estado: EstadoExistencia.disponible,
+      imagenPath: imagenPath,
       metadatos: metadatos,
       createdAt: ahora,
       updatedAt: ahora,

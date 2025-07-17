@@ -34,6 +34,9 @@ class Existencia extends Equatable {
   /// Estado actual de la existencia
   final EstadoExistencia estado;
   
+  /// Ruta a la imagen del producto
+  final String? imagenPath;
+  
   /// Metadatos adicionales para modos especializados
   final Map<String, dynamic> metadatos;
   
@@ -54,6 +57,7 @@ class Existencia extends Equatable {
     required this.proveedorId,
     required this.perecibilidad,
     this.estado = EstadoExistencia.disponible,
+    this.imagenPath,
     this.metadatos = const {},
     required this.createdAt,
     required this.updatedAt,
@@ -71,6 +75,7 @@ class Existencia extends Equatable {
     String? proveedorId,
     TipoPerecibilidad? perecibilidad,
     EstadoExistencia? estado,
+    String? imagenPath,
     Map<String, dynamic>? metadatos,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -86,6 +91,7 @@ class Existencia extends Equatable {
       proveedorId: proveedorId ?? this.proveedorId,
       perecibilidad: perecibilidad ?? this.perecibilidad,
       estado: estado ?? this.estado,
+      imagenPath: imagenPath ?? this.imagenPath,
       metadatos: metadatos ?? this.metadatos,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -150,6 +156,7 @@ class Existencia extends Equatable {
         proveedorId,
         perecibilidad,
         estado,
+        imagenPath,
         metadatos,
         createdAt,
         updatedAt,

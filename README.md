@@ -1,4 +1,4 @@
-# Gestor de Inventario de Alacena 
+# Sazones Semanales: Inventario Doméstico Integral 
 
 Esta aplicación está diseñada para gestionar eficientemente el inventario de la alacena personal, permitiendo actualizar las existencias de productos después de cada compra en el supermercado. La aplicación se enfoca en facilitar el registro y seguimiento de productos para una persona que vive sola, con gustos y restricciones alimentarias bien definidos.
 

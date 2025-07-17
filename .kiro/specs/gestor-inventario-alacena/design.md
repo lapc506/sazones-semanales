@@ -1,4 +1,4 @@
-# Documento de Diseño - Gestor de Inventario de Alacena
+# Documento de Diseño - Sazones Semanales: Inventario Doméstico Integral
 
 ## Visión General
 
@@ -66,6 +66,7 @@ class Existencia {
   String proveedorId;
   TipoPerecibilidad perecibilidad;
   EstadoExistencia estado; // DISPONIBLE, CONSUMIDA, CADUCADA
+  String? imagenPath; // Ruta a la imagen del producto
   Map<String, dynamic> metadatos; // Para modos especializados
 }
 ```
