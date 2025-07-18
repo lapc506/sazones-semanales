@@ -21,30 +21,28 @@ class _ImageCaptureWidgetState extends State<ImageCaptureWidget> {
   File? _selectedImage;
   late final CameraService _cameraService;
   bool _isCameraAvailable = false;
-  
+
   @override
   void initState() {
     super.initState();
     // Inicializar el servicio de cámara apropiado para la plataforma
     _cameraService = CameraServiceFactory.getCameraService();
-    
+
     if (widget.initialImagePath != null) {
       _selectedImage = File(widget.initialImagePath!);
     }
-    
+
     // Verificar si la cámara está disponible e inicializarla proactivamente
     _initializeCamera();
   }
-  
+
   Future<void> _initializeCamera() async {
     // Verificar disponibilidad de la cámara
     _isCameraAvailable = await _cameraService.isCameraAvailable();
-    
-    if (_isCameraAvailable) {
-      // Inicializar la cámara proactivamente para que esté lista cuando el usuario quiera usarla
-      await _cameraService.initializeProactively();
-    }
-    
+
+    // Ya no inicializamos la cámara proactivamente para evitar conflictos
+    // cuando se muestra el visor de cámara en vivo
+
     // Actualizar el estado si el widget sigue montado
     if (mounted) {
       setState(() {});
@@ -55,12 +53,13 @@ class _ImageCaptureWidgetState extends State<ImageCaptureWidget> {
     try {
       // Verificar nuevamente si la cámara está disponible
       final cameraAvailable = await _cameraService.isCameraAvailable();
-      
+
       if (!cameraAvailable) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('La cámara no está disponible. Seleccionando desde archivos...'),
+              content: Text(
+                  'La cámara no está disponible. Seleccionando desde archivos...'),
               duration: Duration(seconds: 3),
             ),
           );
@@ -69,20 +68,21 @@ class _ImageCaptureWidgetState extends State<ImageCaptureWidget> {
         }
         return;
       }
-      
-      // Usar el nuevo método con vista previa
+
+      // Usar el nuevo método con visor de cámara en vivo
       if (mounted) {
         bool shouldRetake = true;
-        
+
         // Bucle para permitir retomar la foto múltiples veces
         while (shouldRetake && mounted) {
-          final CaptureResult result = await _cameraService.takePictureWithPreview(
+          final CaptureResult result =
+              await _cameraService.showLiveCameraViewfinder(
+            context: context,
             maxWidth: 1200,
             maxHeight: 1200,
             imageQuality: 85,
-            context: context,
           );
-          
+
           // Verificar si la captura fue exitosa y confirmada
           if (result.isSuccess && mounted) {
             setState(() {
@@ -90,9 +90,10 @@ class _ImageCaptureWidgetState extends State<ImageCaptureWidget> {
             });
             widget.onImageSelected(_selectedImage!);
             shouldRetake = false; // Salir del bucle
-          } 
+          }
           // Verificar si el usuario quiere retomar la foto
-          else if (result.hasError && result.errorMessage == "RETAKE_REQUESTED") {
+          else if (result.hasError &&
+              result.errorMessage == "RETAKE_REQUESTED") {
             // Continuar en el bucle para tomar otra foto
             continue;
           }
@@ -131,7 +132,7 @@ class _ImageCaptureWidgetState extends State<ImageCaptureWidget> {
         maxHeight: 1200,
         imageQuality: 85,
       );
-      
+
       if (image != null && mounted) {
         setState(() {
           _selectedImage = image;
@@ -173,7 +174,8 @@ class _ImageCaptureWidgetState extends State<ImageCaptureWidget> {
                         borderRadius: BorderRadius.circular(12),
                         child: Image.file(
                           _selectedImage!,
-                          fit: BoxFit.contain, // Usar contain para mostrar toda la imagen
+                          fit: BoxFit
+                              .contain, // Usar contain para mostrar toda la imagen
                           width: double.infinity,
                           height: 250,
                         ),
@@ -190,7 +192,8 @@ class _ImageCaptureWidgetState extends State<ImageCaptureWidget> {
                               shape: BoxShape.circle,
                             ),
                             child: IconButton(
-                              icon: const Icon(Icons.zoom_in, color: Colors.white),
+                              icon: const Icon(Icons.zoom_in,
+                                  color: Colors.white),
                               onPressed: () => _mostrarImagenCompleta(context),
                               tooltip: 'Ver imagen completa',
                               iconSize: 20,
@@ -299,10 +302,10 @@ class _ImageCaptureWidgetState extends State<ImageCaptureWidget> {
       ),
     );
   }
-  
+
   void _mostrarImagenCompleta(BuildContext context) {
     if (_selectedImage == null) return;
-    
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => Scaffold(

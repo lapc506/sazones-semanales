@@ -2,11 +2,6 @@
 
 - [x] 1. Configurar estructura del proyecto y dependencias básicas
 
-
-
-
-
-
   - Crear estructura de carpetas siguiendo Clean Architecture (domain, application, infrastructure, presentation)
   - Configurar dependencias en pubspec.yaml (sqflite, provider, camera, speech_to_text, flutter_local_notifications)
   - Configurar permisos en Android e iOS para cámara, micrófono y notificaciones
@@ -14,11 +9,7 @@
 
 - [x] 2. Implementar entidades del dominio y modelos de datos
 
-
-
-
   - [x] 2.1 Crear entidades principales (Existencia, ProductoBase, Proveedor)
-
 
     - Implementar clase Existencia con todos los campos requeridos
     - Implementar clase ProductoBase para autocompletado
@@ -27,18 +18,12 @@
 
   - [x] 2.2 Crear enums y tipos auxiliares
 
-
     - Implementar TipoPerecibilidad (PERECEDERO, SEMI_PERECEDERO, NO_PERECEDERO)
     - Implementar EstadoExistencia (DISPONIBLE, CONSUMIDA, CADUCADA)
     - Crear tipos para comandos de voz y configuraciones
     - _Requerimientos: 3.1, 3.2, 3.3, 4.1_
 
 - [x] 3. Implementar capa de infraestructura - Base de datos
-
-
-
-
-
 
   - [x] 3.1 Configurar SQLite y crear esquema de base de datos
 
@@ -50,12 +35,6 @@
 
   - [x] 3.2 Implementar repositorios concretos
 
-
-
-
-
-
-
     - Implementar ExistenciaRepositoryImpl con operaciones CRUD
     - Implementar ProductoRepositoryImpl con búsqueda y autocompletado
     - Implementar ProveedorRepositoryImpl
@@ -64,16 +43,7 @@
 
 - [x] 4. Implementar servicios de dispositivo
 
-
-
-
-
-
-
-
-
   - [x] 4.1 Implementar servicio de escáner de códigos de barras
-
 
     - Configurar cámara para escaneo de códigos de barras
     - Implementar validación de formatos de códigos de barras
@@ -83,18 +53,12 @@
 
   - [x] 4.2 Implementar servicio de reconocimiento de voz
 
-
-
     - Configurar speech_to_text para comandos de consumo
     - Implementar parser de comandos de voz en español
     - Crear lógica de búsqueda por nombre de producto
     - _Requerimientos: 4.1, 4.2_
 
   - [x] 4.3 Implementar servicio de notificaciones locales
-
-
-
-
 
     - Configurar flutter_local_notifications
     - Implementar programación de notificaciones por fecha de caducidad
@@ -103,12 +67,7 @@
 
 - [x] 5. Implementar casos de uso de la aplicación
 
-
-
-
   - [x] 5.1 Casos de uso para gestión de existencias
-
-
     - Implementar AgregarExistenciaUseCase con validaciones
     - Implementar MarcarComoConsumidaUseCase
     - Implementar BuscarExistenciasUseCase con filtros
@@ -134,29 +93,7 @@
 
 - [ ] 6. Implementar interfaz de usuario básica
 
-
-
-
-
   - [x] 6.1 Crear pantalla principal con lista de existencias
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     - Implementar ListView con existencias activas
     - Crear filtros por categoría y estado
     - Implementar búsqueda por nombre de producto
@@ -164,21 +101,6 @@
     - _Requerimientos: 1.1, 1.2, 3.1, 3.2, 3.3_
 
   - [x] 6.2 Crear pantalla de agregar existencia
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     - Implementar formulario de captura de datos
     - Integrar escáner de códigos de barras
     - Implementar autocompletado de nombres de productos
@@ -187,17 +109,18 @@
     - _Requerimientos: 1.1, 1.2, 1.3, 2.1, 2.2_
 
   - [ ] 6.3 Crear pantalla de consumo por voz
+
+
+
+
+
+
     - Implementar botón de grabación de comandos de voz
     - Mostrar resultados de búsqueda por comando
     - Crear confirmación visual antes de marcar como consumida
     - _Requerimientos: 4.1, 4.2_
 
   - [x] 6.4 Mejorar experiencia de usuario de la cámara
-
-
-
-
-
 
     - Implementar inicialización proactiva de la cámara para mostrar opciones inmediatamente
     - Crear pantalla de vista previa de foto capturada con opciones de confirmar/retomar

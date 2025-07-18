@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:camera/camera.dart';
 import 'camera_service.dart';
 import 'camera_preview_service.dart';
+import 'package:sazones_semanales/presentation/screens/windows_camera_viewfinder_screen.dart';
 
 /// Mock de CameraDescription para Windows
 class MockCameraDescription {
@@ -119,35 +120,49 @@ class CameraServiceWindows implements CameraService {
 
   @override
   Future<void> initializeProactively() async {
+    debugPrint(
+        '📸 [CameraServiceWindows.initializeProactively] Iniciando inicialización proactiva');
     _updateState(CameraInitializationState.initializing);
 
     try {
       final result = await _initializeCamera();
       if (result) {
+        debugPrint(
+            '📸 [CameraServiceWindows.initializeProactively] Inicialización proactiva exitosa');
         _updateState(CameraInitializationState.ready);
       } else {
+        debugPrint(
+            '📸 [CameraServiceWindows.initializeProactively] Error en inicialización proactiva');
         _updateState(CameraInitializationState.error);
       }
     } catch (e) {
-      debugPrint('Error en inicialización proactiva: $e');
+      debugPrint(
+          '📸 [CameraServiceWindows.initializeProactively] Error en inicialización proactiva: $e');
       _updateState(CameraInitializationState.error);
     }
   }
 
   /// Inicializa la cámara intentando usar la API real primero, fallback a mock
   Future<bool> _initializeCamera() async {
+    debugPrint(
+        '📸 [CameraServiceWindows._initializeCamera] Iniciando inicialización de cámara');
+
     if (_initialized &&
         (_realCameraController != null || _mockCameraController != null)) {
+      debugPrint(
+          '📸 [CameraServiceWindows._initializeCamera] Cámara ya inicializada, retornando');
       return true;
     }
 
     try {
       // Intentar usar la API real de camera primero
-      debugPrint('Intentando usar API real de cámara en Windows...');
+      debugPrint(
+          '📸 [CameraServiceWindows._initializeCamera] Intentando usar API real de cámara en Windows...');
       _realCameras = await availableCameras();
 
       if (_realCameras != null && _realCameras!.isNotEmpty) {
-        debugPrint('Cámaras reales encontradas: ${_realCameras!.length}');
+        debugPrint(
+            '📸 [CameraServiceWindows._initializeCamera] Cámaras reales encontradas: ${_realCameras!.length}');
 
         // Crear un CameraController real
         _realCameraController = CameraController(
@@ -160,26 +175,32 @@ class CameraServiceWindows implements CameraService {
         await _realCameraController!.initialize();
         _initialized = true;
         _usingRealCamera = true;
-        debugPrint('Cámara real inicializada exitosamente');
+        debugPrint(
+            '📸 [CameraServiceWindows._initializeCamera] Cámara real inicializada exitosamente');
         return true;
       } else {
-        debugPrint('No se encontraron cámaras reales, usando mock');
+        debugPrint(
+            '📸 [CameraServiceWindows._initializeCamera] No se encontraron cámaras reales, usando mock');
         return await _initializeMockCamera();
       }
     } catch (e) {
       // Si falla la API real (MissingPluginException, UnimplementedError, etc.)
-      debugPrint('API real no disponible, usando mock: $e');
+      debugPrint(
+          '📸 [CameraServiceWindows._initializeCamera] API real no disponible, usando mock: $e');
       return await _initializeMockCamera();
     }
   }
 
   /// Inicializa la cámara mock como fallback
   Future<bool> _initializeMockCamera() async {
+    debugPrint(
+        '📸 [CameraServiceWindows._initializeMockCamera] Iniciando inicialización de cámara mock');
     try {
       _mockCameras = await mockAvailableCameras();
 
       if (_mockCameras == null || _mockCameras!.isEmpty) {
-        debugPrint('No se encontraron cámaras mock en Windows');
+        debugPrint(
+            '📸 [CameraServiceWindows._initializeMockCamera] No se encontraron cámaras mock en Windows');
         return false;
       }
 
@@ -190,38 +211,65 @@ class CameraServiceWindows implements CameraService {
       await _mockCameraController!.initialize();
       _initialized = true;
       _usingRealCamera = false;
-      debugPrint('Cámara mock inicializada exitosamente');
+      debugPrint(
+          '📸 [CameraServiceWindows._initializeMockCamera] Cámara mock inicializada exitosamente');
       return true;
     } catch (e) {
-      debugPrint('Error al inicializar la cámara mock en Windows: $e');
+      debugPrint(
+          '📸 [CameraServiceWindows._initializeMockCamera] Error al inicializar la cámara mock en Windows: $e');
       _mockCameraController = null;
       _initialized = false;
       return false;
     }
   }
 
+  /// Libera los recursos de la cámara
+  Future<void> _releaseCamera() async {
+    debugPrint(
+        '📸 [CameraServiceWindows._releaseCamera] Liberando recursos de la cámara');
+    try {
+      if (_usingRealCamera && _realCameraController != null) {
+        debugPrint(
+            '📸 [CameraServiceWindows._releaseCamera] Liberando cámara real');
+        await _realCameraController!.dispose();
+        _realCameraController = null;
+      } else if (!_usingRealCamera && _mockCameraController != null) {
+        debugPrint(
+            '📸 [CameraServiceWindows._releaseCamera] Liberando cámara mock');
+        await _mockCameraController!.dispose();
+        _mockCameraController = null;
+      }
+      _initialized = false;
+      _usingRealCamera = false;
+      debugPrint(
+          '📸 [CameraServiceWindows._releaseCamera] Recursos liberados exitosamente');
+    } catch (e) {
+      debugPrint(
+          '📸 [CameraServiceWindows._releaseCamera] Error al liberar recursos de la cámara: $e');
+    }
+  }
+
   @override
   Future<bool> isCameraAvailable() async {
+    debugPrint(
+        '📸 [CameraServiceWindows.isCameraAvailable] Verificando disponibilidad de cámara');
     try {
       // Intentar inicializar la cámara mock para verificar si está disponible
       final result = await _initializeCamera();
 
       // Si no pudimos inicializar, liberar recursos
       if (!result) {
-        if (_usingRealCamera && _realCameraController != null) {
-          await _realCameraController!.dispose();
-          _realCameraController = null;
-        } else if (!_usingRealCamera && _mockCameraController != null) {
-          await _mockCameraController!.dispose();
-          _mockCameraController = null;
-        }
-        _initialized = false;
+        debugPrint(
+            '📸 [CameraServiceWindows.isCameraAvailable] No se pudo inicializar la cámara, liberando recursos');
+        await _releaseCamera();
       }
 
+      debugPrint(
+          '📸 [CameraServiceWindows.isCameraAvailable] Resultado: $result');
       return result;
     } catch (e) {
       debugPrint(
-          'Error al verificar disponibilidad de cámara mock en Windows: $e');
+          '📸 [CameraServiceWindows.isCameraAvailable] Error al verificar disponibilidad de cámara: $e');
       return false;
     }
   }
@@ -232,11 +280,14 @@ class CameraServiceWindows implements CameraService {
     required double maxHeight,
     required int imageQuality,
   }) async {
+    debugPrint(
+        '📸 [CameraServiceWindows.takePicture] Iniciando captura de foto');
     try {
       // Intentar inicializar la cámara mock
       final initialized = await _initializeCamera();
       if (!initialized || _cameraController == null) {
-        debugPrint('No se pudo inicializar la cámara en Windows');
+        debugPrint(
+            '📸 [CameraServiceWindows.takePicture] No se pudo inicializar la cámara en Windows');
         // Si no podemos usar la cámara, redirigir a la selección de archivo
         return await pickImageFromGallery(
           maxWidth: maxWidth,
@@ -249,8 +300,12 @@ class CameraServiceWindows implements CameraService {
         // Tomar la foto usando el controlador activo (real o mock)
         dynamic xFile;
         if (_usingRealCamera) {
+          debugPrint(
+              '📸 [CameraServiceWindows.takePicture] Tomando foto con cámara real');
           xFile = await _realCameraController!.takePicture();
         } else {
+          debugPrint(
+              '📸 [CameraServiceWindows.takePicture] Tomando foto con cámara mock');
           xFile = await _mockCameraController!.takePicture();
         }
 
@@ -259,10 +314,13 @@ class CameraServiceWindows implements CameraService {
 
         // Verificar si el archivo existe
         if (await file.exists()) {
+          debugPrint(
+              '📸 [CameraServiceWindows.takePicture] Foto capturada exitosamente: ${file.path}');
           return file;
         }
       } catch (e) {
-        debugPrint('Error al tomar foto con mock en Windows: $e');
+        debugPrint(
+            '📸 [CameraServiceWindows.takePicture] Error al tomar foto: $e');
         // Si hay un error al tomar la foto, redirigir a la selección de archivo
         return await pickImageFromGallery(
           maxWidth: maxWidth,
@@ -273,7 +331,8 @@ class CameraServiceWindows implements CameraService {
 
       return null;
     } catch (e) {
-      debugPrint('Error general al tomar foto con mock en Windows: $e');
+      debugPrint(
+          '📸 [CameraServiceWindows.takePicture] Error general al tomar foto: $e');
       // En caso de error, redirigir a la selección de archivo
       return await pickImageFromGallery(
         maxWidth: maxWidth,
@@ -282,20 +341,9 @@ class CameraServiceWindows implements CameraService {
       );
     } finally {
       // Liberar recursos de la cámara después de tomar la foto
-      if (_initialized) {
-        try {
-          if (_usingRealCamera && _realCameraController != null) {
-            await _realCameraController!.dispose();
-            _realCameraController = null;
-          } else if (!_usingRealCamera && _mockCameraController != null) {
-            await _mockCameraController!.dispose();
-            _mockCameraController = null;
-          }
-          _initialized = false;
-        } catch (e) {
-          debugPrint('Error al liberar recursos de la cámara: $e');
-        }
-      }
+      debugPrint(
+          '📸 [CameraServiceWindows.takePicture] Liberando recursos después de tomar foto');
+      await _releaseCamera();
     }
   }
 
@@ -306,11 +354,14 @@ class CameraServiceWindows implements CameraService {
     required int imageQuality,
     required BuildContext context,
   }) async {
+    debugPrint(
+        '📸 [CameraServiceWindows.takePictureWithPreview] Iniciando captura con vista previa');
     try {
       // Intentar inicializar la cámara
       final initialized = await _initializeCamera();
       if (!initialized || _cameraController == null) {
-        debugPrint('No se pudo inicializar la cámara en Windows');
+        debugPrint(
+            '📸 [CameraServiceWindows.takePictureWithPreview] No se pudo inicializar la cámara en Windows');
         // Si no podemos usar la cámara, redirigir a la selección de archivo
         final file = await pickImageFromGallery(
           maxWidth: maxWidth,
@@ -319,9 +370,13 @@ class CameraServiceWindows implements CameraService {
         );
 
         if (file != null) {
+          debugPrint(
+              '📸 [CameraServiceWindows.takePictureWithPreview] Imagen seleccionada de galería: ${file.path}');
           // En Windows, cuando usamos FilePicker, asumimos que el usuario ya confirmó la selección
           return CaptureResult(imageFile: file, wasConfirmed: true);
         } else {
+          debugPrint(
+              '📸 [CameraServiceWindows.takePictureWithPreview] Selección de imagen cancelada');
           return CaptureResult(); // Cancelado
         }
       }
@@ -330,8 +385,12 @@ class CameraServiceWindows implements CameraService {
         // Tomar la foto usando el controlador activo (real o mock)
         dynamic xFile;
         if (_usingRealCamera) {
+          debugPrint(
+              '📸 [CameraServiceWindows.takePictureWithPreview] Tomando foto con cámara real');
           xFile = await _realCameraController!.takePicture();
         } else {
+          debugPrint(
+              '📸 [CameraServiceWindows.takePictureWithPreview] Tomando foto con cámara mock');
           xFile = await _mockCameraController!.takePicture();
         }
 
@@ -340,32 +399,44 @@ class CameraServiceWindows implements CameraService {
 
         // Verificar si el archivo existe
         if (await file.exists()) {
+          debugPrint(
+              '📸 [CameraServiceWindows.takePictureWithPreview] Foto capturada exitosamente: ${file.path}');
+
           // Mostrar la vista previa para confirmación
-          final action =
-              await CameraPreviewService.showPreviewConfirmation(
+          debugPrint(
+              '📸 [CameraServiceWindows.takePictureWithPreview] Mostrando vista previa para confirmación');
+          final action = await CameraPreviewService.showPreviewConfirmation(
             context: context,
             imageFile: file,
           );
-          
+
           // Si el usuario quiere retomar la foto, indicarlo en el resultado
           if (action == PreviewAction.retake) {
+            debugPrint(
+                '📸 [CameraServiceWindows.takePictureWithPreview] Usuario solicitó retomar la foto');
             return CaptureResult(
               imageFile: null,
               wasConfirmed: false,
-              errorMessage: "RETAKE_REQUESTED", // Código especial para indicar retomar
+              errorMessage:
+                  "RETAKE_REQUESTED", // Código especial para indicar retomar
             );
           }
 
+          debugPrint(
+              '📸 [CameraServiceWindows.takePictureWithPreview] Usuario ${action == PreviewAction.confirm ? "confirmó" : "canceló"} la foto');
           return CaptureResult(
             imageFile: file,
             wasConfirmed: action == PreviewAction.confirm,
           );
         } else {
+          debugPrint(
+              '📸 [CameraServiceWindows.takePictureWithPreview] El archivo de imagen no se pudo crear');
           return CaptureResult(
               errorMessage: 'El archivo de imagen no se pudo crear');
         }
       } catch (e) {
-        debugPrint('Error al tomar foto con vista previa en Windows: $e');
+        debugPrint(
+            '📸 [CameraServiceWindows.takePictureWithPreview] Error al tomar foto con vista previa: $e');
         // Si hay un error al tomar la foto, redirigir a la selección de archivo
         final file = await pickImageFromGallery(
           maxWidth: maxWidth,
@@ -380,24 +451,14 @@ class CameraServiceWindows implements CameraService {
         }
       }
     } catch (e) {
-      debugPrint('Error general al tomar foto con vista previa en Windows: $e');
+      debugPrint(
+          '📸 [CameraServiceWindows.takePictureWithPreview] Error general al tomar foto con vista previa: $e');
       return CaptureResult(errorMessage: 'Error general: $e');
     } finally {
       // Liberar recursos de la cámara después de tomar la foto
-      if (_initialized) {
-        try {
-          if (_usingRealCamera && _realCameraController != null) {
-            await _realCameraController!.dispose();
-            _realCameraController = null;
-          } else if (!_usingRealCamera && _mockCameraController != null) {
-            await _mockCameraController!.dispose();
-            _mockCameraController = null;
-          }
-          _initialized = false;
-        } catch (e) {
-          debugPrint('Error al liberar recursos de la cámara: $e');
-        }
-      }
+      debugPrint(
+          '📸 [CameraServiceWindows.takePictureWithPreview] Liberando recursos después de tomar foto');
+      await _releaseCamera();
     }
   }
 
@@ -407,6 +468,8 @@ class CameraServiceWindows implements CameraService {
     required double maxHeight,
     required int imageQuality,
   }) async {
+    debugPrint(
+        '📸 [CameraServiceWindows.pickImageFromGallery] Seleccionando imagen de galería');
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.image,
@@ -416,37 +479,160 @@ class CameraServiceWindows implements CameraService {
       if (result != null && result.files.isNotEmpty) {
         final path = result.files.first.path;
         if (path != null) {
+          debugPrint(
+              '📸 [CameraServiceWindows.pickImageFromGallery] Imagen seleccionada: $path');
           return File(path);
         }
       }
+      debugPrint(
+          '📸 [CameraServiceWindows.pickImageFromGallery] Selección cancelada');
       return null;
     } catch (e) {
-      debugPrint('Error al seleccionar imagen en Windows: $e');
+      debugPrint(
+          '📸 [CameraServiceWindows.pickImageFromGallery] Error al seleccionar imagen: $e');
       return null;
     }
   }
 
   @override
-  Future<void> dispose() async {
+  Future<CaptureResult> showLiveCameraViewfinder({
+    required BuildContext context,
+    double? maxWidth,
+    double? maxHeight,
+    int? imageQuality,
+  }) async {
+    debugPrint(
+        '📸 [CameraServiceWindows.showLiveCameraViewfinder] Iniciando visor de cámara en vivo');
     try {
-      // Liberar recursos de la cámara
-      if (_usingRealCamera && _realCameraController != null) {
-        await _realCameraController!.dispose();
-        _realCameraController = null;
-      } else if (!_usingRealCamera && _mockCameraController != null) {
-        await _mockCameraController!.dispose();
-        _mockCameraController = null;
+      // Verificar si el contexto está disponible
+      if (!context.mounted) {
+        debugPrint(
+            '📸 [CameraServiceWindows.showLiveCameraViewfinder] Contexto no disponible');
+        return CaptureResult(errorMessage: 'El contexto ya no está disponible');
       }
 
-      _initialized = false;
-      _usingRealCamera = false;
+      // Asegurarse de liberar cualquier recurso de cámara existente
+      debugPrint(
+          '📸 [CameraServiceWindows.showLiveCameraViewfinder] Liberando recursos de cámara existentes');
+      await _releaseCamera();
+
+      // Intentar inicializar la cámara para verificar si está disponible
+      debugPrint(
+          '📸 [CameraServiceWindows.showLiveCameraViewfinder] Verificando disponibilidad de cámara');
+      final bool cameraAvailable = await isCameraAvailable();
+      debugPrint(
+          '📸 [CameraServiceWindows.showLiveCameraViewfinder] Cámara disponible: $cameraAvailable');
+
+      // Si la cámara no está disponible, usar el método existente como fallback
+      if (!cameraAvailable) {
+        debugPrint(
+            '📸 [CameraServiceWindows.showLiveCameraViewfinder] Cámara no disponible, usando FilePicker como fallback');
+
+        // Usar los valores predeterminados si no se proporcionan
+        final double effectiveMaxWidth = maxWidth ?? 1200;
+        final double effectiveMaxHeight = maxHeight ?? 1200;
+        final int effectiveImageQuality = imageQuality ?? 85;
+
+        // Usar el método existente como fallback
+        return await takePictureWithPreview(
+          maxWidth: effectiveMaxWidth,
+          maxHeight: effectiveMaxHeight,
+          imageQuality: effectiveImageQuality,
+          context: context,
+        );
+      }
+
+      // Liberar recursos nuevamente antes de mostrar la pantalla del visor
+      debugPrint(
+          '📸 [CameraServiceWindows.showLiveCameraViewfinder] Liberando recursos antes de mostrar el visor');
+      await _releaseCamera();
+
+      // Mostrar la pantalla del visor de cámara en vivo para Windows
+      debugPrint(
+          '📸 [CameraServiceWindows.showLiveCameraViewfinder] Mostrando pantalla del visor de cámara');
+      final File? imageFile = await Navigator.of(context).push<File?>(
+        MaterialPageRoute(
+          builder: (context) => WindowsCameraViewfinderScreen(
+            onPhotoTaken: (file) {
+              debugPrint(
+                  '📸 [CameraServiceWindows.showLiveCameraViewfinder] Foto tomada: ${file.path}');
+              return Navigator.of(context).pop(file);
+            },
+            onCancel: () {
+              debugPrint(
+                  '📸 [CameraServiceWindows.showLiveCameraViewfinder] Captura cancelada');
+              return Navigator.of(context).pop(null);
+            },
+          ),
+        ),
+      );
+
+      // Si el usuario canceló o no se capturó ninguna imagen
+      if (imageFile == null) {
+        debugPrint(
+            '📸 [CameraServiceWindows.showLiveCameraViewfinder] Usuario canceló o no se capturó imagen');
+        return CaptureResult(); // Usuario canceló
+      }
+
+      // Verificar si el contexto sigue montado antes de mostrar la vista previa
+      if (!context.mounted) {
+        debugPrint(
+            '📸 [CameraServiceWindows.showLiveCameraViewfinder] Contexto no disponible para vista previa');
+        return CaptureResult(
+          imageFile: imageFile,
+          wasConfirmed:
+              true, // Asumimos confirmación si no podemos mostrar la vista previa
+        );
+      }
+
+      // Mostrar la vista previa para confirmación usando el servicio existente
+      debugPrint(
+          '📸 [CameraServiceWindows.showLiveCameraViewfinder] Mostrando vista previa para confirmación');
+      final action = await CameraPreviewService.showPreviewConfirmation(
+        context: context,
+        imageFile: imageFile,
+      );
+
+      // Si el usuario quiere retomar la foto, indicarlo en el resultado
+      if (action == PreviewAction.retake) {
+        debugPrint(
+            '📸 [CameraServiceWindows.showLiveCameraViewfinder] Usuario solicitó retomar la foto');
+        return CaptureResult(
+          imageFile: null,
+          wasConfirmed: false,
+          errorMessage:
+              "RETAKE_REQUESTED", // Código especial para indicar retomar
+        );
+      }
+
+      // Retornar el resultado final
+      debugPrint(
+          '📸 [CameraServiceWindows.showLiveCameraViewfinder] Usuario ${action == PreviewAction.confirm ? "confirmó" : "canceló"} la foto');
+      return CaptureResult(
+        imageFile: imageFile,
+        wasConfirmed: action == PreviewAction.confirm,
+      );
+    } catch (e) {
+      debugPrint(
+          '📸 [CameraServiceWindows.showLiveCameraViewfinder] Error en el visor de cámara en vivo: $e');
+      return CaptureResult(errorMessage: 'Error al capturar imagen: $e');
+    }
+  }
+
+  @override
+  Future<void> dispose() async {
+    debugPrint('📸 [CameraServiceWindows.dispose] Liberando recursos');
+    try {
+      await _releaseCamera();
 
       // Cerrar el stream controller
       await _stateController.close();
 
-      debugPrint('Recursos de CameraServiceWindows liberados');
+      debugPrint(
+          '📸 [CameraServiceWindows.dispose] Recursos liberados exitosamente');
     } catch (e) {
-      debugPrint('Error al liberar recursos de CameraServiceWindows: $e');
+      debugPrint(
+          '📸 [CameraServiceWindows.dispose] Error al liberar recursos: $e');
     }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sazones_semanales/presentation/screens/barcode_scanner_demo_screen.dart';
+import 'package:sazones_semanales/presentation/screens/consumo_por_voz_screen.dart';
 import 'package:sazones_semanales/presentation/screens/existencias_screen.dart';
-import 'package:sazones_semanales/presentation/screens/speech_recognition_demo_screen.dart';
 import 'dart:io' show Platform;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -116,7 +116,8 @@ class HomeScreen extends StatelessWidget {
                   style: GoogleFonts.getFont(
                     AppConstants.primaryFont,
                     fontSize: AppConstants.fontSizeSubheading,
-                    fontWeight: AppConstants.fontWeightMedium, // Medium weight para mejor legibilidad
+                    fontWeight: AppConstants
+                        .fontWeightMedium, // Medium weight para mejor legibilidad
                     color: colorScheme.onSurface.withAlpha(179), // ~0.7 opacity
                   ),
                 ),
@@ -175,8 +176,7 @@ class HomeScreen extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  const SpeechRecognitionDemoScreen(),
+                              builder: (context) => const ConsumoPorVozScreen(),
                             ),
                           );
                         },
@@ -283,7 +283,8 @@ class HomeScreen extends StatelessWidget {
                   fontSize: isSmall
                       ? AppConstants.fontSizeCaption
                       : AppConstants.fontSizeBody,
-                  fontWeight: AppConstants.fontWeightMedium, // Medium weight para mejor legibilidad
+                  fontWeight: AppConstants
+                      .fontWeightMedium, // Medium weight para mejor legibilidad
                   color: colorScheme.onSurface.withAlpha(179), // ~0.7 opacity
                 ),
               ),
