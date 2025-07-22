@@ -2,17 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:sazones_semanales/presentation/screens/barcode_scanner_demo_screen.dart';
 import 'package:sazones_semanales/presentation/screens/consumo_por_voz_screen.dart';
 import 'package:sazones_semanales/presentation/screens/existencias_screen.dart';
+import 'package:sazones_semanales/presentation/screens/speech_recognition_config_screen.dart';
+import 'package:sazones_semanales/core/config/platform_config.dart';
 import 'dart:io' show Platform;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sazones_semanales/core/constants/app_constants.dart';
+import 'package:sazones_semanales/infrastructure/di/service_locator.dart';
 
-void main() {
+void main() async {
+  // Asegurarse de que Flutter esté inicializado
+  WidgetsFlutterBinding.ensureInitialized();
+
   // Inicializar sqflite para desktop
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
+
+  // Inicializar la configuración de la plataforma
+  final platformConfig = PlatformConfig();
+  await platformConfig.initialize();
+
+  // Inicializar el localizador de servicios
+  ServiceLocator.init();
 
   runApp(const GestorInventarioApp());
 }
@@ -51,13 +64,31 @@ class GestorInventarioApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const HomeScreen(), // Cambiado a HomeScreen como pantalla inicial
+      // Definir las rutas de la aplicación
+      routes: {
+        '/': (context) => const HomeScreen(),
+        '/speech_recognition_config': (context) =>
+            const SpeechRecognitionConfigScreen(),
+      },
+      initialRoute: '/', // Ruta inicial
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Registrar servicios dependientes del contexto
+    ServiceLocator.registerContextDependentServices(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -183,6 +214,26 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+
+                const SizedBox(height: 16),
+
+                // Botón de Configuración
+                _buildFeatureButton(
+                  context: context,
+                  icon: Icons.settings,
+                  title: 'Configuración',
+                  description: 'Configura el reconocimiento de voz',
+                  color: colorScheme.secondary,
+                  isSmall: false,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const SpeechRecognitionConfigScreen(),
+                      ),
+                    );
+                  },
                 ),
 
                 const Spacer(),

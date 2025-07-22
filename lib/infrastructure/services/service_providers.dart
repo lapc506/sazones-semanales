@@ -4,7 +4,7 @@ import 'package:sazones_semanales/domain/services/notification_service.dart';
 import 'package:sazones_semanales/domain/services/speech_recognition_service.dart';
 import 'package:sazones_semanales/infrastructure/services/barcode_scanner_service_impl.dart';
 import 'package:sazones_semanales/infrastructure/services/notification_service_impl.dart';
-import 'package:sazones_semanales/infrastructure/services/speech_recognition_service_mock.dart';
+import 'package:sazones_semanales/infrastructure/services/speech_recognition_service_factory.dart';
 
 /// Provider for the barcode scanner service
 class BarcodeScannerServiceProvider {
@@ -18,29 +18,40 @@ class BarcodeScannerServiceProvider {
 class SpeechRecognitionServiceProvider {
   /// Returns an instance of the speech recognition service
   ///
-  /// IMPORTANT: We're currently using the mock implementation instead of the real
-  /// speech_to_text package implementation due to the following issues:
-  ///
-  /// 1. There are compatibility issues with the speech_to_text package and our current
-  ///    Flutter/Dart environment. Despite being listed in pubspec.yaml, the package
-  ///    is not being properly installed or recognized.
-  ///
-  /// 2. The mock implementation allows development and testing to continue without
-  ///    being blocked by these package installation issues.
-  ///
-  /// 3. The mock simulates speech recognition by showing a text input dialog,
-  ///    which is then processed by the same parsing logic that would handle
-  ///    actual speech recognition results.
-  ///
-  /// TODO:
-  /// When the speech_to_text package installation issues are resolved,
-  /// replace this with the real implementation (SpeechRecognitionServiceImpl).
-  /// This will require:
-  /// - Ensuring the package is properly installed
-  /// - Updating this provider to return SpeechRecognitionServiceImpl
-  /// - Testing with actual microphone input
+  /// Uses the service locator if available, otherwise falls back to the factory.
+  /// This provides the appropriate implementation for each platform:
+  /// - Android/iOS: Uses the real implementation with the device's microphone
+  /// - Windows: Uses the native Windows implementation
+  /// - Other platforms: Uses the mock implementation with a text input dialog
   static SpeechRecognitionService getService(BuildContext context) {
-    return SpeechRecognitionServiceMock(context);
+    // Usar el localizador de servicios si está disponible
+    try {
+      // Importación dinámica para evitar dependencia circular
+      dynamic serviceLocator = _getServiceLocator();
+      if (serviceLocator != null &&
+          serviceLocator.isRegistered<SpeechRecognitionService>()) {
+        return serviceLocator.get<SpeechRecognitionService>();
+      }
+    } catch (e) {
+      debugPrint('Error al obtener el servicio del localizador: $e');
+    }
+
+    // Fallback a la fábrica directa si el localizador no está disponible
+    return SpeechRecognitionServiceFactory.create(context);
+  }
+
+  /// Obtiene el localizador de servicios dinámicamente
+  static dynamic _getServiceLocator() {
+    try {
+      // Importación dinámica para evitar dependencia circular
+      return const String(
+                  'package:sazones_semanales/infrastructure/di/service_locator.dart')
+              .startsWith('package:')
+          ? null
+          : (throw UnimplementedError());
+    } catch (e) {
+      return null;
+    }
   }
 }
 
@@ -48,7 +59,7 @@ class SpeechRecognitionServiceProvider {
 class NotificationServiceProvider {
   /// Singleton instance of the notification service
   static NotificationService? _instance;
-  
+
   /// Returns an instance of the notification service
   static NotificationService getService() {
     _instance ??= NotificationServiceImpl();

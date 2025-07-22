@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sazones_semanales/core/constants/app_constants.dart';
 import 'package:sazones_semanales/domain/entities/existencia.dart';
-import 'package:sazones_semanales/domain/repositories/existencia_repository.dart';
 import 'package:sazones_semanales/infrastructure/repositories/repository_providers.dart';
-import 'package:sazones_semanales/infrastructure/services/service_providers.dart';
 import 'package:sazones_semanales/presentation/widgets/speech_recognition_button.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sazones_semanales/infrastructure/di/service_locator.dart';
 
 /// Pantalla para consumir productos mediante comandos de voz
 class ConsumoPorVozScreen extends StatefulWidget {
@@ -19,6 +18,13 @@ class ConsumoPorVozScreen extends StatefulWidget {
 class _ConsumoPorVozScreenState extends State<ConsumoPorVozScreen> {
   /// El último texto reconocido
   String? _lastRecognizedText;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Registrar servicios dependientes del contexto
+    ServiceLocator.registerContextDependentServices(context);
+  }
 
   /// Los productos y cantidades reconocidos
   Map<String, int> _recognizedProducts = {};
@@ -80,24 +86,43 @@ class _ConsumoPorVozScreenState extends State<ConsumoPorVozScreen> {
             ),
             const SizedBox(height: 24),
             Center(
-              child: SpeechRecognitionButton(
-                onTextRecognized: (text) {
-                  setState(() {
-                    _lastRecognizedText = text;
-                  });
-                },
-                onProductsRecognized: (products) {
-                  setState(() {
-                    _recognizedProducts = products;
-                    _existenciasEncontradas.clear();
-                    _existenciasSeleccionadas.clear();
-                  });
+              child: Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.purple.withOpacity(0.3),
+                      spreadRadius: 5,
+                      blurRadius: 10,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: SpeechRecognitionButton(
+                    onTextRecognized: (text) {
+                      setState(() {
+                        _lastRecognizedText = text;
+                      });
+                    },
+                    onProductsRecognized: (products) {
+                      setState(() {
+                        _recognizedProducts = products;
+                        _existenciasEncontradas.clear();
+                        _existenciasSeleccionadas.clear();
+                      });
 
-                  if (products.isNotEmpty) {
-                    _buscarExistencias(products);
-                  }
-                },
-                label: 'Hablar para consumir',
+                      if (products.isNotEmpty) {
+                        _buscarExistencias(products);
+                      }
+                    },
+                    label: 'Hablar para consumir',
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 32),
@@ -283,7 +308,10 @@ class _ConsumoPorVozScreenState extends State<ConsumoPorVozScreen> {
     });
 
     try {
-      final repository = RepositoryProviders.getExistenciaRepository(context);
+      // Guardar el contexto antes de la operación asíncrona
+      final currentContext = context;
+      final repository =
+          RepositoryProviders.getExistenciaRepository(currentContext);
       final Map<String, List<Existencia>> resultados = {};
 
       for (final productName in products.keys) {
@@ -307,21 +335,27 @@ class _ConsumoPorVozScreenState extends State<ConsumoPorVozScreen> {
         }
       }
 
-      setState(() {
-        _existenciasEncontradas = resultados;
-        _isBuscando = false;
-      });
+      // Verificar si el widget sigue montado antes de actualizar el estado
+      if (mounted) {
+        setState(() {
+          _existenciasEncontradas = resultados;
+          _isBuscando = false;
+        });
+      }
     } catch (e) {
-      setState(() {
-        _isBuscando = false;
-      });
+      // Verificar si el widget sigue montado antes de actualizar el estado
+      if (mounted) {
+        setState(() {
+          _isBuscando = false;
+        });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error al buscar existencias: $e'),
-          backgroundColor: Colors.red,
-        ),
-      );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error al buscar existencias: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
@@ -332,7 +366,10 @@ class _ConsumoPorVozScreenState extends State<ConsumoPorVozScreen> {
     });
 
     try {
-      final repository = RepositoryProviders.getExistenciaRepository(context);
+      // Guardar el contexto antes de la operación asíncrona
+      final currentContext = context;
+      final repository =
+          RepositoryProviders.getExistenciaRepository(currentContext);
       final List<String> idsAConsumir = [];
 
       // Recopilar todos los IDs de existencias seleccionadas
@@ -343,33 +380,39 @@ class _ConsumoPorVozScreenState extends State<ConsumoPorVozScreen> {
       // Marcar todas las existencias como consumidas
       await repository.marcarMultiplesComoConsumidas(idsAConsumir);
 
-      // Mostrar mensaje de éxito
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Productos marcados como consumidos correctamente'),
-          backgroundColor: Colors.green,
-        ),
-      );
+      // Verificar si el widget sigue montado antes de actualizar el estado
+      if (mounted) {
+        // Mostrar mensaje de éxito
+        ScaffoldMessenger.of(currentContext).showSnackBar(
+          const SnackBar(
+            content: Text('Productos marcados como consumidos correctamente'),
+            backgroundColor: Colors.green,
+          ),
+        );
 
-      // Limpiar selecciones
-      setState(() {
-        _existenciasSeleccionadas.clear();
-        _existenciasEncontradas.clear();
-        _recognizedProducts.clear();
-        _lastRecognizedText = null;
-        _isConsumiendo = false;
-      });
+        // Limpiar selecciones
+        setState(() {
+          _existenciasSeleccionadas.clear();
+          _existenciasEncontradas.clear();
+          _recognizedProducts.clear();
+          _lastRecognizedText = null;
+          _isConsumiendo = false;
+        });
+      }
     } catch (e) {
-      setState(() {
-        _isConsumiendo = false;
-      });
+      // Verificar si el widget sigue montado antes de actualizar el estado
+      if (mounted) {
+        setState(() {
+          _isConsumiendo = false;
+        });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error al consumir productos: $e'),
-          backgroundColor: Colors.red,
-        ),
-      );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error al consumir productos: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 

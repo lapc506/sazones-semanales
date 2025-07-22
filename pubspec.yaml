@@ -49,6 +49,10 @@ dependencies:
   camera_platform_interface: ^2.5.2
   file_picker: ^5.3.1 # Para seleccionar archivos en Windows
   google_fonts: ^6.1.0 # Para usar fuentes de Google
+  # Dependencias para reconocimiento de voz en Windows
+  ffi: ^2.1.0
+  win32: ^5.0.0
+  get_it: ^7.6.0 # Para inyección de dependencias
 
 flutter:
   uses-material-design: true
