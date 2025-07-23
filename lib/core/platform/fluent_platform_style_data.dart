@@ -14,49 +14,49 @@ class FluentPlatformStyleData {
   final ExtendedPlatformStyle linux;
 
   const FluentPlatformStyleData({
-    this.android = ExtendedPlatformStyle.material,
-    this.ios = ExtendedPlatformStyle.cupertino,
-    this.macos = ExtendedPlatformStyle.cupertino,
-    this.windows = ExtendedPlatformStyle.fluent,
-    this.web = ExtendedPlatformStyle.material,
-    this.fuchsia = ExtendedPlatformStyle.material,
-    this.linux = ExtendedPlatformStyle.material,
+    this.android = ExtendedPlatformStyle.Material,
+    this.ios = ExtendedPlatformStyle.Cupertino,
+    this.macos = ExtendedPlatformStyle.Cupertino,
+    this.windows = ExtendedPlatformStyle.Fluent,
+    this.web = ExtendedPlatformStyle.Material,
+    this.fuchsia = ExtendedPlatformStyle.Material,
+    this.linux = ExtendedPlatformStyle.Material,
   });
 
   /// Creates a FluentPlatformStyleData with all platforms using Material style
   const FluentPlatformStyleData.material()
-      : android = ExtendedPlatformStyle.material,
-        ios = ExtendedPlatformStyle.material,
-        macos = ExtendedPlatformStyle.material,
-        windows = ExtendedPlatformStyle.material,
-        web = ExtendedPlatformStyle.material,
-        fuchsia = ExtendedPlatformStyle.material,
-        linux = ExtendedPlatformStyle.material;
+      : android = ExtendedPlatformStyle.Material,
+        ios = ExtendedPlatformStyle.Material,
+        macos = ExtendedPlatformStyle.Material,
+        windows = ExtendedPlatformStyle.Material,
+        web = ExtendedPlatformStyle.Material,
+        fuchsia = ExtendedPlatformStyle.Material,
+        linux = ExtendedPlatformStyle.Material;
 
   /// Creates a FluentPlatformStyleData with all platforms using Cupertino style
   const FluentPlatformStyleData.cupertino()
-      : android = ExtendedPlatformStyle.cupertino,
-        ios = ExtendedPlatformStyle.cupertino,
-        macos = ExtendedPlatformStyle.cupertino,
-        windows = ExtendedPlatformStyle.cupertino,
-        web = ExtendedPlatformStyle.cupertino,
-        fuchsia = ExtendedPlatformStyle.cupertino,
-        linux = ExtendedPlatformStyle.cupertino;
+      : android = ExtendedPlatformStyle.Cupertino,
+        ios = ExtendedPlatformStyle.Cupertino,
+        macos = ExtendedPlatformStyle.Cupertino,
+        windows = ExtendedPlatformStyle.Cupertino,
+        web = ExtendedPlatformStyle.Cupertino,
+        fuchsia = ExtendedPlatformStyle.Cupertino,
+        linux = ExtendedPlatformStyle.Cupertino;
 
   /// Creates a FluentPlatformStyleData with Windows using Fluent and others using defaults
   const FluentPlatformStyleData.fluentOnWindows()
-      : android = ExtendedPlatformStyle.material,
-        ios = ExtendedPlatformStyle.cupertino,
-        macos = ExtendedPlatformStyle.cupertino,
-        windows = ExtendedPlatformStyle.fluent,
-        web = ExtendedPlatformStyle.material,
-        fuchsia = ExtendedPlatformStyle.material,
-        linux = ExtendedPlatformStyle.material;
+      : android = ExtendedPlatformStyle.Material,
+        ios = ExtendedPlatformStyle.Cupertino,
+        macos = ExtendedPlatformStyle.Cupertino,
+        windows = ExtendedPlatformStyle.Fluent,
+        web = ExtendedPlatformStyle.Material,
+        fuchsia = ExtendedPlatformStyle.Material,
+        linux = ExtendedPlatformStyle.Material;
 
   /// Gets the appropriate style for the current platform
   ExtendedPlatformStyle get currentPlatformStyle {
     if (kIsWeb) return web;
-    
+
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
@@ -106,7 +106,7 @@ class FluentPlatformStyleData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    
+
     return other is FluentPlatformStyleData &&
         other.android == android &&
         other.ios == ios &&

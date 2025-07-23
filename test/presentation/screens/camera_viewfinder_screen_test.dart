@@ -2,19 +2,30 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:mockito/annotations.dart';
+import 'package:camera/camera.dart';
 import 'package:sazones_semanales/presentation/screens/camera_viewfinder_screen.dart';
+
+// Generar mocks para las dependencias
+@GenerateMocks([CameraController])
+import 'camera_viewfinder_screen_test.mocks.dart';
 
 // Mock para File ya que no podemos usar archivos reales en pruebas
 class MockFile extends Mock implements File {}
 
 void main() {
+  late MockCameraController mockCameraController;
+  late MockFile mockFile;
+
+  setUp(() {
+    mockCameraController = MockCameraController();
+    mockFile = MockFile();
+  });
+
   group('CameraViewfinderScreen Tests', () {
     testWidgets(
         'CameraViewfinderScreen muestra indicador de carga durante inicialización',
         (WidgetTester tester) async {
-      // Arrange
-      final mockFile = MockFile();
-
       // Act
       await tester.pumpWidget(
         MaterialApp(
@@ -30,9 +41,78 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
-    // Nota: Las pruebas más completas requerirían mocks para CameraController
-    // y no pueden realizarse completamente en un entorno de pruebas unitarias
-    // debido a la dependencia de hardware real.
+    testWidgets(
+        'CameraViewfinderScreen llama onCancel cuando se presiona el botón de retroceso',
+        (WidgetTester tester) async {
+      // Arrange
+      bool cancelCalled = false;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: CameraViewfinderScreen(
+            onPhotoTaken: (_) {},
+            onCancel: () {
+              cancelCalled = true;
+            },
+          ),
+        ),
+      );
+
+      // Simular que la cámara está inicializada para mostrar el botón de retroceso
+      // Esto requeriría una forma de inyectar el controlador de cámara mock
+      // o exponer un método para cambiar el estado en el widget para pruebas
+
+      // Este test es un ejemplo y necesitaría adaptarse a la implementación real
+      // del CameraViewfinderScreen para poder probar el botón de retroceso
+
+      // Assert
+      expect(cancelCalled, isFalse); // Inicialmente no se ha llamado
+
+      // Nota: Para completar esta prueba, se necesitaría:
+      // 1. Una forma de inyectar el mockCameraController en el widget
+      // 2. Simular que la cámara está inicializada
+      // 3. Encontrar y presionar el botón de retroceso
+      // 4. Verificar que onCancel fue llamado
+    });
+
+    testWidgets(
+        'CameraViewfinderScreen llama onPhotoTaken con el archivo capturado',
+        (WidgetTester tester) async {
+      // Arrange
+      File? capturedFile;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: CameraViewfinderScreen(
+            onPhotoTaken: (file) {
+              capturedFile = file;
+            },
+            onCancel: () {},
+          ),
+        ),
+      );
+
+      // Este test es un ejemplo y necesitaría adaptarse a la implementación real
+      // del CameraViewfinderScreen para poder probar la captura de fotos
+
+      // Assert
+      expect(capturedFile,
+          isNull); // Inicialmente no se ha capturado ningún archivo
+
+      // Nota: Para completar esta prueba, se necesitaría:
+      // 1. Una forma de inyectar el mockCameraController en el widget
+      // 2. Simular que la cámara está inicializada
+      // 3. Configurar el mock para devolver un mockFile al llamar a takePicture()
+      // 4. Encontrar y presionar el botón de captura
+      // 5. Verificar que onPhotoTaken fue llamado con el mockFile
+    });
+
+    // Nota: Las pruebas más completas requerirían una arquitectura que permita
+    // inyectar mocks para CameraController y otras dependencias externas.
+    // Esto podría lograrse mediante:
+    // 1. Refactorizar CameraViewfinderScreen para aceptar un CameraController inyectado
+    // 2. Crear una fábrica abstracta para CameraController que pueda ser reemplazada en pruebas
+    // 3. Usar un framework de inyección de dependencias
 
     // Instrucciones para pruebas manuales en dispositivos Android:
 

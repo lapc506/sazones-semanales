@@ -14,8 +14,7 @@ class FluentPlatformSettingsData extends PlatformSettingsData {
     super.platformStyle,
     super.legacyIosUsesMaterialWidgets,
     super.wrapCupertinoAppBarMiddleWithMediaQuery,
-    super.matchMaterialCaseForPlatformText,
-    
+
     // New Fluent configuration parameter
     this.fluentConfiguration,
   });
@@ -27,19 +26,20 @@ class FluentPlatformSettingsData extends PlatformSettingsData {
     PlatformStyleData? platformStyle,
     bool? legacyIosUsesMaterialWidgets,
     bool? wrapCupertinoAppBarMiddleWithMediaQuery,
-    bool? matchMaterialCaseForPlatformText,
     FluentConfiguration? fluentConfiguration,
   }) {
     return FluentPlatformSettingsData(
-      iosUsesMaterialWidgets: iosUsesMaterialWidgets ?? this.iosUsesMaterialWidgets,
-      iosUseZeroPaddingForAppbarPlatformIcon: iosUseZeroPaddingForAppbarPlatformIcon ?? 
-          this.iosUseZeroPaddingForAppbarPlatformIcon,
+      iosUsesMaterialWidgets:
+          iosUsesMaterialWidgets ?? this.iosUsesMaterialWidgets,
+      iosUseZeroPaddingForAppbarPlatformIcon:
+          iosUseZeroPaddingForAppbarPlatformIcon ??
+              this.iosUseZeroPaddingForAppbarPlatformIcon,
       platformStyle: platformStyle ?? this.platformStyle,
-      legacyIosUsesMaterialWidgets: legacyIosUsesMaterialWidgets ?? this.legacyIosUsesMaterialWidgets,
-      wrapCupertinoAppBarMiddleWithMediaQuery: wrapCupertinoAppBarMiddleWithMediaQuery ?? 
-          this.wrapCupertinoAppBarMiddleWithMediaQuery,
-      matchMaterialCaseForPlatformText: matchMaterialCaseForPlatformText ?? 
-          this.matchMaterialCaseForPlatformText,
+      legacyIosUsesMaterialWidgets:
+          legacyIosUsesMaterialWidgets ?? this.legacyIosUsesMaterialWidgets,
+      wrapCupertinoAppBarMiddleWithMediaQuery:
+          wrapCupertinoAppBarMiddleWithMediaQuery ??
+              this.wrapCupertinoAppBarMiddleWithMediaQuery,
       fluentConfiguration: fluentConfiguration ?? this.fluentConfiguration,
     );
   }
@@ -51,11 +51,12 @@ class FluentPlatformSettingsData extends PlatformSettingsData {
   }) {
     return FluentPlatformSettingsData(
       iosUsesMaterialWidgets: settings.iosUsesMaterialWidgets,
-      iosUseZeroPaddingForAppbarPlatformIcon: settings.iosUseZeroPaddingForAppbarPlatformIcon,
+      iosUseZeroPaddingForAppbarPlatformIcon:
+          settings.iosUseZeroPaddingForAppbarPlatformIcon,
       platformStyle: settings.platformStyle,
       legacyIosUsesMaterialWidgets: settings.legacyIosUsesMaterialWidgets,
-      wrapCupertinoAppBarMiddleWithMediaQuery: settings.wrapCupertinoAppBarMiddleWithMediaQuery,
-      matchMaterialCaseForPlatformText: settings.matchMaterialCaseForPlatformText,
+      wrapCupertinoAppBarMiddleWithMediaQuery:
+          settings.wrapCupertinoAppBarMiddleWithMediaQuery,
       fluentConfiguration: fluentConfiguration,
     );
   }
@@ -64,26 +65,26 @@ class FluentPlatformSettingsData extends PlatformSettingsData {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! FluentPlatformSettingsData) return false;
-    
+
     // We can't use super != other because PlatformSettingsData doesn't override ==
     return other.iosUsesMaterialWidgets == iosUsesMaterialWidgets &&
-        other.iosUseZeroPaddingForAppbarPlatformIcon == iosUseZeroPaddingForAppbarPlatformIcon &&
+        other.iosUseZeroPaddingForAppbarPlatformIcon ==
+            iosUseZeroPaddingForAppbarPlatformIcon &&
         other.platformStyle == platformStyle &&
         other.legacyIosUsesMaterialWidgets == legacyIosUsesMaterialWidgets &&
-        other.wrapCupertinoAppBarMiddleWithMediaQuery == wrapCupertinoAppBarMiddleWithMediaQuery &&
-        other.matchMaterialCaseForPlatformText == matchMaterialCaseForPlatformText &&
+        other.wrapCupertinoAppBarMiddleWithMediaQuery ==
+            wrapCupertinoAppBarMiddleWithMediaQuery &&
         other.fluentConfiguration == fluentConfiguration;
   }
 
   @override
-  int get hashCode => 
-    iosUsesMaterialWidgets.hashCode ^
-    iosUseZeroPaddingForAppbarPlatformIcon.hashCode ^
-    platformStyle.hashCode ^
-    legacyIosUsesMaterialWidgets.hashCode ^
-    wrapCupertinoAppBarMiddleWithMediaQuery.hashCode ^
-    matchMaterialCaseForPlatformText.hashCode ^
-    (fluentConfiguration?.hashCode ?? 0);
+  int get hashCode =>
+      iosUsesMaterialWidgets.hashCode ^
+      iosUseZeroPaddingForAppbarPlatformIcon.hashCode ^
+      platformStyle.hashCode ^
+      legacyIosUsesMaterialWidgets.hashCode ^
+      wrapCupertinoAppBarMiddleWithMediaQuery.hashCode ^
+      (fluentConfiguration?.hashCode ?? 0);
 
   @override
   String toString() {

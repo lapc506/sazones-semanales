@@ -55,7 +55,6 @@ class SpeechRecognitionServiceFactory {
   /// Crea una instancia del servicio de reconocimiento de voz según la implementación actual
   static SpeechRecognitionService create(BuildContext context) {
     // Obtener la configuración de la plataforma
-    final platformConfig = PlatformConfig();
 
     // Verificar si se debe usar whisper.cpp y si los archivos están disponibles
     if (_currentImplementation == SpeechRecognitionImplementation.whisper) {

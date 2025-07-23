@@ -224,7 +224,7 @@ class _CameraViewfinderScreenState extends State<CameraViewfinderScreen>
     OverlayEntry overlayEntry = OverlayEntry(
       builder: (context) => Positioned.fill(
         child: Container(
-          color: Colors.white.withOpacity(0.7),
+          color: Colors.white.withAlpha(179), // 0.7 * 255 = 179
         ),
       ),
     );
