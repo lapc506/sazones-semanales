@@ -73,12 +73,17 @@
     - Verificar el manejo de callbacks onPhotoTaken y onCancel
     - _Requisitos: 1.4, 3.1, 3.3, 4.1, 4.2_
 
-  - [ ] 8.2 Probar en dispositivos Android
+  - [x] 8.2 Probar en dispositivos Android
+
+
 
     - Verificar inicialización de la cámara
     - Probar captura de fotos
     - Verificar flujo completo de captura y confirmación
     - _Requisitos: 3.1, 3.3, 4.1, 4.2, 4.3_
+
+
+
 
   - [ ] 8.3 Probar en dispositivos iOS
     - Verificar permisos en Info.plist
