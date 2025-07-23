@@ -503,7 +503,7 @@ class SpeechRecognitionWhisperImpl implements SpeechRecognitionService {
   void _useFallbackService(BuildContext context) {
     // Cambiar a la implementación en la nube
     SpeechRecognitionServiceFactory.setImplementation(
-        SpeechRecognitionServiceFactory.SpeechRecognitionImplementation.cloud);
+        SpeechRecognitionImplementation.cloud);
 
     // Mostrar un mensaje
     ScaffoldMessenger.of(context).showSnackBar(

@@ -44,9 +44,9 @@ class SpeechRecognitionServiceProvider {
   static dynamic _getServiceLocator() {
     try {
       // Importación dinámica para evitar dependencia circular
-      return const String(
-                  'package:sazones_semanales/infrastructure/di/service_locator.dart')
-              .startsWith('package:')
+      const packagePath =
+          'package:sazones_semanales/infrastructure/di/service_locator.dart';
+      return packagePath.startsWith('package:')
           ? null
           : (throw UnimplementedError());
     } catch (e) {

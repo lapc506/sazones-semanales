@@ -26,8 +26,7 @@ class _SpeechRecognitionConfigScreenState
   final TextEditingController _apiKeyController = TextEditingController();
 
   // Implementación seleccionada
-  SpeechRecognitionServiceFactory.SpeechRecognitionImplementation
-      _selectedImplementation =
+  SpeechRecognitionImplementation _selectedImplementation =
       SpeechRecognitionServiceFactory.getImplementation();
 
   @override
@@ -94,8 +93,7 @@ class _SpeechRecognitionConfigScreenState
                   _buildImplementationSelector(),
                   const SizedBox(height: 24),
                   if (_selectedImplementation ==
-                      SpeechRecognitionServiceFactory
-                          .SpeechRecognitionImplementation.whisper) ...[
+                      SpeechRecognitionImplementation.whisper) ...[
                     Text(
                       'Configuración de Whisper.cpp',
                       style: GoogleFonts.getFont(
@@ -110,8 +108,7 @@ class _SpeechRecognitionConfigScreenState
                     _buildFallbackConfig(),
                   ],
                   if (_selectedImplementation ==
-                      SpeechRecognitionServiceFactory
-                          .SpeechRecognitionImplementation.cloud) ...[
+                      SpeechRecognitionImplementation.cloud) ...[
                     Text(
                       'Configuración de API en la nube',
                       style: GoogleFonts.getFont(
@@ -158,14 +155,11 @@ class _SpeechRecognitionConfigScreenState
 
             // Opción para móviles
             if (Platform.isAndroid || Platform.isIOS)
-              RadioListTile<
-                  SpeechRecognitionServiceFactory
-                  .SpeechRecognitionImplementation>(
+              RadioListTile<SpeechRecognitionImplementation>(
                 title: const Text('Reconocimiento nativo (Android/iOS)'),
                 subtitle:
                     const Text('Usa el reconocimiento de voz del dispositivo'),
-                value: SpeechRecognitionServiceFactory
-                    .SpeechRecognitionImplementation.mobile,
+                value: SpeechRecognitionImplementation.mobile,
                 groupValue: _selectedImplementation,
                 onChanged: (value) {
                   setState(() {
@@ -174,34 +168,15 @@ class _SpeechRecognitionConfigScreenState
                 },
               ),
 
-            // Opción para Windows API
-            if (Platform.isWindows)
-              RadioListTile<
-                  SpeechRecognitionServiceFactory
-                  .SpeechRecognitionImplementation>(
-                title: const Text('Windows Speech Recognition'),
-                subtitle: const Text(
-                    'Usa la API de reconocimiento de voz de Windows'),
-                value: SpeechRecognitionServiceFactory
-                    .SpeechRecognitionImplementation.windowsApi,
-                groupValue: _selectedImplementation,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedImplementation = value!;
-                  });
-                },
-              ),
+            // Opción para Windows API eliminada
 
             // Opción para Whisper.cpp
             if (Platform.isWindows || Platform.isMacOS || Platform.isLinux)
-              RadioListTile<
-                  SpeechRecognitionServiceFactory
-                  .SpeechRecognitionImplementation>(
+              RadioListTile<SpeechRecognitionImplementation>(
                 title: const Text('Whisper.cpp (Offline)'),
                 subtitle:
                     const Text('Usa el modelo de OpenAI Whisper localmente'),
-                value: SpeechRecognitionServiceFactory
-                    .SpeechRecognitionImplementation.whisper,
+                value: SpeechRecognitionImplementation.whisper,
                 groupValue: _selectedImplementation,
                 onChanged: (value) {
                   setState(() {
@@ -211,14 +186,11 @@ class _SpeechRecognitionConfigScreenState
               ),
 
             // Opción para API en la nube
-            RadioListTile<
-                SpeechRecognitionServiceFactory
-                .SpeechRecognitionImplementation>(
+            RadioListTile<SpeechRecognitionImplementation>(
               title: const Text('API en la nube (OpenAI)'),
               subtitle:
                   const Text('Usa la API de OpenAI para reconocimiento de voz'),
-              value: SpeechRecognitionServiceFactory
-                  .SpeechRecognitionImplementation.cloud,
+              value: SpeechRecognitionImplementation.cloud,
               groupValue: _selectedImplementation,
               onChanged: (value) {
                 setState(() {
@@ -228,14 +200,11 @@ class _SpeechRecognitionConfigScreenState
             ),
 
             // Opción para simulación
-            RadioListTile<
-                SpeechRecognitionServiceFactory
-                .SpeechRecognitionImplementation>(
+            RadioListTile<SpeechRecognitionImplementation>(
               title: const Text('Simulación'),
               subtitle: const Text(
                   'Simula el reconocimiento de voz con entrada de texto'),
-              value: SpeechRecognitionServiceFactory
-                  .SpeechRecognitionImplementation.mock,
+              value: SpeechRecognitionImplementation.mock,
               groupValue: _selectedImplementation,
               onChanged: (value) {
                 setState(() {
